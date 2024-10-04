@@ -1,6 +1,7 @@
 # Make Yourself  
 This program is aimed at motivating people to fulfill their goals.  
 Developed according to MDK 01.03 Mobile application development.  
+[layout Make Yourself](https://www.figma.com/design/3nRv2m2nfX3MeCgFz63n3N/layout-Make-Yourself?node-id=0-1&t=dpSGquOOnC2OjXLc-1)  
   
 ## Support
 If you have any difficulties or questions, create discussion in this repository.
