@@ -1,12 +1,7 @@
 ﻿using Supabase;
 using Supabase.Gotrue;
-using Supabase.Interfaces;
-using Supabase.Postgrest;
 using Supabase.Postgrest.Responses;
-using System;
-using System.Reflection;
 using UnitTestsBD.Models;
-using static Supabase.Postgrest.QueryOptions;
 
 namespace UnitTestsBD
 {
@@ -36,15 +31,12 @@ namespace UnitTestsBD
         public async Task<ModeledResponse<Categories>> GetCategories() => await supabase.From<Categories>().Get();
         public async Task<ModeledResponse<Goals>> GetGoals() => await supabase.From<Goals>().Get();
         public async Task<ModeledResponse<Spheres>> GetSpheres() => await supabase.From<Spheres>().Get();
-        public async Task<ModeledResponse<Spheres>> GetUserSpheres(Guid id) => await supabase.From<Spheres>().Where(x => x.IdUser == id).Get();
         public async Task<ModeledResponse<Tasks>> GetTasks() => await supabase.From<Tasks>().Get();
-        public async Task<ModeledResponse<Users>> GetUsers() => await supabase.From<Users>().Get();
-
-        public async Task<Session?>? CreateUser(string email, string password) => await supabase.Auth.SignUp(email, password);
-        
+        public async Task<ModeledResponse<Spheres>> GetUserSpheres(Guid id) => await supabase.From<Spheres>().Where(x => x.IdUser == id).Get();
+        public async Task<Session?>? CreateUser(string email, string password) => await supabase.Auth.SignUp(email, password);       
         public async void AddUser(Users user) => await supabase.From<Users>().Insert(user);
 
-
+        //Create
         [TestMethod]
         public void CreateUser_Auth_UserReturned()
         {
@@ -56,6 +48,7 @@ namespace UnitTestsBD
             Assert.IsNotNull(user);
         }
 
+        //Trigger
         [TestMethod]
         public void GetUserSpheres_TableSpheres_Spheres6DefaultReturned()
         {
@@ -76,7 +69,8 @@ namespace UnitTestsBD
             var spheres = temp.Result.Models;
             Assert.AreEqual(spheres.Count, 6);
         }
-
+       
+        //Read
         [TestMethod]
         public void GetCategories_TableCategories_ListCategoriesReturned()
         {
@@ -112,5 +106,27 @@ namespace UnitTestsBD
             var tasks = result.Result.Models;
             Assert.IsNotNull(tasks);
         }
+
+
+        //Update
+/*        [TestMethod]
+        public void UpdateTasks_TableTasks_DeleteReturned()
+        {
+            var result = await supabase.From<Tasks>().Where(x => x.NameTask == "Auckland").Set(x => x.NameTask, "Middle Earth").Update();
+            result.Wait();
+            var update = result.Result.Models;
+            Assert.IsNotNull(update);
+        }*/
+
+
+        //Delete
+        /* [TestMethod]
+         public void DeleteTasks_TableTasks_DeleteReturned()
+         {
+             var result = await supabase.From<Tasks>().Where(x => x.Id == ...).Delete();
+             result.Wait();
+             Assert.IsTrue(result.IsCompleted);
+         }*/
+
     }
 }
