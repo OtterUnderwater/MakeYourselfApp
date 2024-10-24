@@ -10,10 +10,10 @@ namespace UnitTestsBD.Models
         public Guid Id { get; set; }
 
         [Column("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Column("login")]
-        public string Login { get; set; }
+        public string? Login { get; set; }
     }
 
 }

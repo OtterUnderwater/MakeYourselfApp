@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\UnitTestsBD.csproj": {}
+    "D:\\otter\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\UnitTestsBD.csproj": {}
   },
   "projects": {
-    "D:\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\UnitTestsBD.csproj": {
+    "D:\\otter\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\UnitTestsBD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\UnitTestsBD.csproj",
+        "projectUniqueName": "D:\\otter\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\UnitTestsBD.csproj",
         "projectName": "UnitTestsBD",
-        "projectPath": "D:\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\UnitTestsBD.csproj",
-        "packagesPath": "C:\\Users\\токареваэо\\.nuget\\packages\\",
-        "outputPath": "D:\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\obj\\",
+        "projectPath": "D:\\otter\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\UnitTestsBD.csproj",
+        "packagesPath": "C:\\Users\\Aziraphale\\.nuget\\packages\\",
+        "outputPath": "D:\\otter\\MakeYourselfApp\\UnitTestsBD\\UnitTestsBD\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "D:\\need_programms\\Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\токареваэо\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Aziraphale\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

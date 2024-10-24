@@ -14,15 +14,15 @@ namespace UnitTestsBD.Models
         public Guid IdGoal { get; set; }
 
         [Column("name_task")]
-        public string NameTask { get; set; }
+        public string? NameTask { get; set; }
 
         [Column("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Column("status")]
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
 
         [Column("id_category")]
-        public int IdCategory { get; set; }
+        public int? IdCategory { get; set; }
     }
 }

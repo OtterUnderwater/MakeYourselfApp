@@ -1,6 +1,8 @@
 ﻿using Supabase;
 using Supabase.Gotrue;
 using Supabase.Postgrest.Responses;
+using System.Net;
+using System.Reflection;
 using UnitTestsBD.Models;
 
 namespace UnitTestsBD
@@ -33,11 +35,14 @@ namespace UnitTestsBD
         public async Task<ModeledResponse<Spheres>> GetSpheres() => await supabase.From<Spheres>().Get();
         public async Task<ModeledResponse<Tasks>> GetTasks() => await supabase.From<Tasks>().Get();
         public async Task<ModeledResponse<Spheres>> GetUserSpheres(Guid id) => await supabase.From<Spheres>().Where(x => x.IdUser == id).Get();
-        public async Task<Session?>? CreateUser(string email, string password) => await supabase.Auth.SignUp(email, password);       
-        public async void AddUser(Users user) => await supabase.From<Users>().Insert(user);
+		public async Task<ModeledResponse<Users>> GetUsers() => await supabase.From<Users>().Get();
+		public async Task<Session?>? CreateUser(string email, string password) => await supabase.Auth.SignUp(email, password);       
+		public async Task<ModeledResponse<Goals>> AddGoal(Goals model) => await supabase.From<Goals>().Upsert(model);
+		public async Task<Session?> SignIn(string email, string password) => await supabase.Auth.SignIn(email, password);
+		public async Task<ModeledResponse<Goals>> UpdateGoal(Guid id, bool newStatus) => await supabase.From<Goals>().Where(x => x.Id == id).Set(x => x.Status, newStatus).Update();
+		public async Task? DeleteGoal(Guid id) => await supabase.From<Goals>().Where(x => x.Id == id).Delete();
 
-        //Create
-        [TestMethod]
+		[TestMethod]
         public void CreateUser_Auth_UserReturned()
         {
             string email = "test1234@bk.ru";
@@ -48,30 +53,29 @@ namespace UnitTestsBD
             Assert.IsNotNull(user);
         }
 
-        //Trigger
         [TestMethod]
         public void GetUserSpheres_TableSpheres_Spheres6DefaultReturned()
         {
-            string email = "test1111@bk.ru";
-            string password = "test1111";
-            var session = CreateUser(email, password);
-            session.Wait();
-            var result = session.Result.User;
-            var user = new Users
-            {
-                Id = Guid.Parse(result.Id),
-                Name = "Test",
-                Login = result.Email
-            };
-            AddUser(user);
-            var temp = GetUserSpheres(user.Id);
+			var session = SignIn("testUpdateDelete@bk.ru", "testUpdateDelete123");
+			session.Wait();
+			var user = session.Result.User;
+			Guid id = Guid.Parse(user.Id);
+			var temp = GetUserSpheres(id);
             temp.Wait();
             var spheres = temp.Result.Models;
             Assert.AreEqual(spheres.Count, 6);
         }
-       
-        //Read
-        [TestMethod]
+
+		[TestMethod]
+		public void GetUsers_TableUsers_ListUsersReturned()
+		{
+			var result = GetUsers();
+			result.Wait();
+			var users = result.Result.Models;
+			Assert.IsNotNull(users);
+		}
+
+		[TestMethod]
         public void GetCategories_TableCategories_ListCategoriesReturned()
         {
             var result = GetCategories();
@@ -105,28 +109,65 @@ namespace UnitTestsBD
             result.Wait();
             var tasks = result.Result.Models;
             Assert.IsNotNull(tasks);
+		}
+		
+        [TestMethod]
+		public void AddGoal_TableGoals_CountReturned()
+		{
+			var session = SignIn("testUpdateDelete@bk.ru", "testUpdateDelete123");
+			session.Wait();
+			var result1 = GetGoals();
+			result1.Wait();
+            var temp = GetSpheres();
+			temp.Wait();
+            Guid id = Guid.Parse(session.Result.User.Id);
+			var sphere = temp.Result.Models.FirstOrDefault(x => x.IdUser == id).Id;    
+			var goal = new Goals
+			{
+				Name = "Тестовая цель",
+				Description = "цель 1",
+				IdSphere = sphere,
+				Status = false,
+				IdUser = Guid.Parse(session.Result.User.Id)
+			};
+            var result2 = AddGoal(goal);
+			result2.Wait();
+            int count1 = result1.Result.Models.Count + 1;
+			int count2 = result2.Result.Models.Count;
+			Assert.AreEqual(count1, count2);
+		}
+
+		[TestMethod]
+        public void UpdateGoal_TableGoals_UpdateReturned()
+		{
+			var session = SignIn("testUpdateDelete@bk.ru", "testUpdateDelete123");
+			session.Wait();
+
+			var user = session.Result.User;
+            Guid id = Guid.Parse(user.Id);
+
+			var result = UpdateGoal(id, true);
+            result.Wait();
+            HttpStatusCode code = result.Result.ResponseMessage.StatusCode;
+		
+			Assert.AreEqual(code, HttpStatusCode.OK);
         }
 
-
-        //Update
-/*        [TestMethod]
-        public void UpdateTasks_TableTasks_DeleteReturned()
-        {
-            var result = await supabase.From<Tasks>().Where(x => x.NameTask == "Auckland").Set(x => x.NameTask, "Middle Earth").Update();
-            result.Wait();
-            var update = result.Result.Models;
-            Assert.IsNotNull(update);
-        }*/
-
-
-        //Delete
-        /* [TestMethod]
-         public void DeleteTasks_TableTasks_DeleteReturned()
+		[TestMethod]
+        public void DeleteGoal_TableGoals_DeleteReturned()
          {
-             var result = await supabase.From<Tasks>().Where(x => x.Id == ...).Delete();
-             result.Wait();
-             Assert.IsTrue(result.IsCompleted);
-         }*/
+			var session = SignIn("testUpdateDelete@bk.ru", "testUpdateDelete123");
+			session.Wait();
+			Guid id = Guid.Parse(session.Result.User.Id);
+			var goals = GetGoals();
+			goals.Wait();
+			Guid firstIdGoals = goals.Result.Models.First(x => x.IdUser == id).Id;
 
-    }
+			var result2 = DeleteGoal(firstIdGoals);
+            result2.Wait();
+
+            Assert.IsTrue(result2.IsCompleted);
+         }
+
+	}
 }
