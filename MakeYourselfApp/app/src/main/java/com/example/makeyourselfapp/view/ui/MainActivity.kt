@@ -21,7 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.makeyourselfapp.model.theme.CurrentTheme
+import com.example.makeyourselfapp.models.theme.CurrentTheme
+import com.example.makeyourselfapp.view.screens.bottombar.BottomBarCustom
 import com.example.makeyourselfapp.view.screens.topbar.TopBarCustom
 import com.example.makeyourselfapp.view.ui.theme.MakeYourselfAppTheme
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
@@ -50,6 +51,7 @@ class MainActivity : ComponentActivity() {
                     }*/
                     },
                     bottomBar = {
+                        BottomBarCustom(controller)
                         /*if (isBottomBarVisible.value) {
                             BottomBar(
                                 navController = controller,

@@ -16,13 +16,13 @@ class SplashViewModel @Inject constructor() : ViewModel() {
             if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 delay(2000L)
                 /*if(service.userIsAuth()){
-                    navController.navigate(NavigationRoutes.HOME) {
+                    controller.navigate(NavigationRoutes.HOME) {
                         popUpTo(NavigationRoutes.SPLASH) {
                             inclusive = true
                         }
                     }
                 } else {
-                    navController.navigate(NavigationRoutes.AUTH) {
+                    controller.navigate(NavigationRoutes.AUTH) {
                         popUpTo(NavigationRoutes.SPLASH) {
                             inclusive = true
                         }

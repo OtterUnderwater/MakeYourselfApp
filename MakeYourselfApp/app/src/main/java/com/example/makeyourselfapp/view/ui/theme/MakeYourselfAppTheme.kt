@@ -5,7 +5,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.example.makeyourselfapp.model.theme.ColorTheme
+import com.example.makeyourselfapp.models.theme.ColorTheme
 
 //Ключ содержит тему по умолчанию
 val LocalAppColorScheme = staticCompositionLocalOf { ListColorTheme[0] }

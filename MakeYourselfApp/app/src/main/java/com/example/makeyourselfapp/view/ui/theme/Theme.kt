@@ -1,6 +1,6 @@
 package com.example.makeyourselfapp.view.ui.theme
 
-import com.example.makeyourselfapp.model.theme.ColorTheme
+import com.example.makeyourselfapp.models.theme.ColorTheme
 
 private val ColorSchemeBP = ColorTheme(
     background = Black,

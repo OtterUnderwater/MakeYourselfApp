@@ -1,4 +1,4 @@
-package com.example.makeyourselfapp.model.theme
+package com.example.makeyourselfapp.models.theme
 
 data class CurrentTheme (
     val index: Int,

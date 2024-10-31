@@ -1,4 +1,4 @@
-package com.example.makeyourselfapp.model.theme
+package com.example.makeyourselfapp.models.theme
 
 import androidx.compose.ui.graphics.Color
 
