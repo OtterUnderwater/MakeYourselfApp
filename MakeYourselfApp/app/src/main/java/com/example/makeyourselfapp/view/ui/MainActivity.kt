@@ -22,7 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.makeyourselfapp.models.theme.CurrentTheme
+import com.example.makeyourselfapp.view.components.TextTittle
 import com.example.makeyourselfapp.view.screens.bottombar.BottomBarCustom
+import com.example.makeyourselfapp.view.screens.splash.Splash
 import com.example.makeyourselfapp.view.screens.topbar.TopBarCustom
 import com.example.makeyourselfapp.view.ui.theme.MakeYourselfAppTheme
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
@@ -37,63 +39,30 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val controller = rememberNavController()
-            val state = remember { mutableStateOf(CurrentTheme(0, ListColorTheme[0])) }
-            MakeYourselfAppTheme ( currentTheme = state.value.theme)
+            val theme = remember { mutableStateOf(CurrentTheme(0, ListColorTheme[0])) }
+            val isNavigateBarVisible = remember { mutableStateOf(true) }
+            MakeYourselfAppTheme ( currentTheme = theme.value.theme)
             {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize().background(AppDesign.colors.background),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(AppDesign.colors.background),
                     topBar = {
-                        TopBarCustom(controller)
-                    /*if (isBottomBarVisible.value) {
-                        BottomBar(
-                            navController = controller,
-                        )
-                    }*/
-                    },
+                        if (isNavigateBarVisible.value) {
+                            TopBarCustom(controller, theme)
+                        }},
                     bottomBar = {
-                        BottomBarCustom(controller)
-                        /*if (isBottomBarVisible.value) {
-                            BottomBar(
-                                navController = controller,
-                            )
-                        }*/
-                    }
+                        if (isNavigateBarVisible.value) {
+                            BottomBarCustom(controller, theme)
+                        }}
                 ) { innerPadding ->
-                    Box(modifier = Modifier.padding(innerPadding))
+                    Box(modifier = Modifier.padding(innerPadding).background(AppDesign.colors.lightBackground).fillMaxSize())
                     {
-                        //MainContent(state)
+                        //Splash(controller, isNavigateBarVisible)
+                        TextTittle("test")
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun MainContent(state: MutableState<CurrentTheme>) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        // Switch the theme
-        Button(
-            colors = ButtonDefaults.buttonColors(
-                containerColor = AppDesign.colors.accent,
-                disabledContainerColor = AppDesign.colors.accent
-            ),
-            onClick = {
-                val nextIndex = (state.value.index + 1) % 5
-                state.value = CurrentTheme(nextIndex, ListColorTheme[nextIndex])
-        }) {
-            Text("Switch Theme")
-        }
-        Button(
-            colors = ButtonDefaults.buttonColors(
-                containerColor = AppDesign.colors.primary,
-                disabledContainerColor = AppDesign.colors.primary
-            ),
-            onClick = {}) {
-            Text("Theme")
         }
     }
 }

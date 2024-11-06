@@ -5,5 +5,5 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun GoalsView(controller: NavHostController, modifier: Modifier = Modifier) {
+fun GoalsView(controller: NavHostController,) {
 }

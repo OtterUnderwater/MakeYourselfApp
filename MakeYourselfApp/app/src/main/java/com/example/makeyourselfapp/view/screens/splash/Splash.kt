@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -16,11 +17,11 @@ import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.R
 
 @Composable
-fun Splash(controller: NavHostController, viewModel: SplashViewModel = hiltViewModel()){
+fun Splash(controller: NavHostController, isVisible: MutableState<Boolean>, viewModel: SplashViewModel = hiltViewModel()){
     val configuration = LocalConfiguration.current
 
     LaunchedEffect(Unit) {
-        viewModel.launch(controller, configuration)
+        viewModel.launch(controller, isVisible, configuration)
     }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

@@ -5,5 +5,5 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun StatisticsView(controller: NavHostController, modifier: Modifier = Modifier) {
+fun StatisticsView(controller: NavHostController) {
 }
