@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ fun BottomBarCustom(controller: NavHostController, theme: MutableState<CurrentTh
             .background(AppDesign.colors.background).padding(bottom = 20.dp),
         contentAlignment = Alignment.TopCenter
     ) {
+        Divider(thickness = 2.dp, color = AppDesign.colors.lightBackground)
         Row( modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Absolute.SpaceAround)
         {

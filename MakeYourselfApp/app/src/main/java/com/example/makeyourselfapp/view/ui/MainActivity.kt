@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.example.makeyourselfapp.domain.navigation.Navigation
 import com.example.makeyourselfapp.models.theme.CurrentTheme
 import com.example.makeyourselfapp.view.components.TextTittle
 import com.example.makeyourselfapp.view.screens.bottombar.BottomBarCustom
@@ -40,26 +41,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             val controller = rememberNavController()
             val theme = remember { mutableStateOf(CurrentTheme(0, ListColorTheme[0])) }
-            val isNavigateBarVisible = remember { mutableStateOf(true) }
+            val isVisibleBar = remember { mutableStateOf(false) }
             MakeYourselfAppTheme ( currentTheme = theme.value.theme)
             {
                 Scaffold(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(AppDesign.colors.background),
-                    topBar = {
-                        if (isNavigateBarVisible.value) {
-                            TopBarCustom(controller, theme)
-                        }},
-                    bottomBar = {
-                        if (isNavigateBarVisible.value) {
-                            BottomBarCustom(controller, theme)
-                        }}
+                    topBar = { if (isVisibleBar.value) TopBarCustom(controller, theme) },
+                    bottomBar = { if (isVisibleBar.value) BottomBarCustom(controller, theme) }
                 ) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding).background(AppDesign.colors.lightBackground).fillMaxSize())
                     {
-                        //Splash(controller, isNavigateBarVisible)
-                        TextTittle("test")
+                        Navigation(controller, isVisibleBar)
                     }
                 }
             }
