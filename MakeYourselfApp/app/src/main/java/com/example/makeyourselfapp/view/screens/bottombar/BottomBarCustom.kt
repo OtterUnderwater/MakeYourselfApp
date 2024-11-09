@@ -35,7 +35,7 @@ fun BottomBarCustom(controller: NavHostController) {
         val currentRoute = navBackStackEntry?.destination?.route
         Divider(thickness = 2.dp, color = AppDesign.colors.lightBackground)
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 12.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Absolute.SpaceAround
         ) {
             ScreenItems.forEach { screen ->

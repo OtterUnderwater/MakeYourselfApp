@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults.outlinedTextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -17,10 +18,11 @@ import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFieldPassword(value: String, input: (String) -> Unit, placeholder: String) {
+fun TextFieldBase(value: String, input: (String) -> Unit, placeholder: String) {
     OutlinedTextField(
         value = value, //текущее значение
-        onValueChange = { input(it) }, //передаем введенный текст
+        onValueChange = {input(it) }, //передаем введенный текст в лямда функцию
+        textStyle = MaterialTheme.typography.bodySmall.copy(color = Color.Black),
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
@@ -31,10 +33,31 @@ fun TextFieldPassword(value: String, input: (String) -> Unit, placeholder: Strin
         placeholder = { Text(text = placeholder) },
         singleLine = true,
         shape = RoundedCornerShape(15.dp),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
+        colors = outlinedTextFieldColors(
             unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            containerColor = Color.White,
+            focusedBorderColor = AppDesign.colors.primary,
+            containerColor = AppDesign.colors.lightBackground,
+            cursorColor = AppDesign.colors.primary
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TextFieldPassword(value: String, input: (String) -> Unit, placeholder: String) {
+    OutlinedTextField(
+        value = value, //текущее значение
+        onValueChange = { input(it) }, //передаем введенный текст
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow( elevation = 4.dp, shape = RoundedCornerShape(30)),
+        placeholder = { Text(text = placeholder) },
+        singleLine = true,
+        shape = RoundedCornerShape(15.dp),
+        colors = outlinedTextFieldColors(
+            unfocusedBorderColor = Color.Transparent,
+            focusedBorderColor = AppDesign.colors.primary,
+            containerColor =  AppDesign.colors.lightBackground,
             cursorColor = AppDesign.colors.primary
         )
     )

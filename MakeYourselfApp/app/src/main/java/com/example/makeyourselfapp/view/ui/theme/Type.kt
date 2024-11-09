@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.makeyourselfapp.R
+import com.example.makeyourselfapp.models.theme.AppTypography
 
 val GeologicaFontFamily = FontFamily(
     Font(R.font.geologica_bold, FontWeight.Bold),
@@ -14,12 +15,8 @@ val GeologicaFontFamily = FontFamily(
     Font(R.font.geologica_light, FontWeight.Light)
 )
 
-/*val Typography = AppTypography(
-    titleLarge =
-)*/
-
-val Typography = Typography(
-    displayMedium = TextStyle(
+val Typography = AppTypography(
+    titleLarge = TextStyle(
         fontFamily = GeologicaFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp),
@@ -27,7 +24,7 @@ val Typography = Typography(
         fontFamily = GeologicaFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp),
-    headlineMedium = TextStyle(
+    bodyBold = TextStyle(
         fontFamily = GeologicaFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp),
@@ -35,10 +32,8 @@ val Typography = Typography(
         fontFamily = GeologicaFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp),
-    labelMedium = TextStyle(
+    bodyLight = TextStyle(
         fontFamily = GeologicaFontFamily,
         fontWeight = FontWeight.Light,
         fontSize = 16.sp)
 )
-
-
