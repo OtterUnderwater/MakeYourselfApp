@@ -66,8 +66,9 @@ fun TopBarCustom(controller: NavHostController, theme: MutableState<CurrentTheme
                         painter = painterResource(R.drawable.icon_output),
                         contentDescription = "",
                         modifier = Modifier
-                            .size(16.dp)
-                            .padding(start = 2.dp)
+                            .size(18.dp)
+                            .padding(start = 2.dp),
+                        tint = AppDesign.colors.textColor
                     )
                 }
             }

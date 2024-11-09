@@ -11,60 +11,65 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.NavHostController
-import com.example.makeyourselfapp.R
-import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
-import com.example.makeyourselfapp.models.screens.BottomNavItem
-import com.example.makeyourselfapp.models.theme.CurrentTheme
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
 @Composable
-fun BottomBarCustom(controller: NavHostController, theme: MutableState<CurrentTheme>,
-                    viewModel: BottomBarCustomViewModel = hiltViewModel()){
-    Box( modifier = Modifier.height(90.dp).fillMaxWidth()
+fun BottomBarCustom(controller: NavHostController) {
+    Box(
+        modifier = Modifier.height(90.dp).fillMaxWidth()
             .background(AppDesign.colors.background).padding(bottom = 20.dp),
         contentAlignment = Alignment.TopCenter
     ) {
+        val navBackStackEntry by controller.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
         Divider(thickness = 2.dp, color = AppDesign.colors.lightBackground)
-        Row( modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Absolute.SpaceAround)
-        {
-            BottomItems.NavItems.forEach { navItem ->
-                IconButton( onClick = { controller.navigate(navItem.route) } )
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 12.dp),
+            horizontalArrangement = Arrangement.Absolute.SpaceAround
+        ) {
+            ScreenItems.forEach { screen ->
+                var selectedColor = Color.Transparent
+                if (currentRoute == screen.route) {
+                    selectedColor = AppDesign.colors.primary
+                }
+                IconButton(
+                    colors = IconButtonColors(
+                        containerColor = selectedColor,
+                        contentColor = AppDesign.colors.textColor,
+                        disabledContainerColor = AppDesign.colors.primary,
+                        disabledContentColor = AppDesign.colors.textColor
+                    ),
+                    onClick = {
+                        if (currentRoute != screen.route) {
+                            controller.navigate(screen.route) {
+                                currentRoute?.let {
+                                    popUpTo(it) {
+                                        inclusive = true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                )
                 {
                     Icon(
-                        imageVector = ImageVector.vectorResource(id = navItem.icon),
-                        contentDescription = "",
+                        imageVector = ImageVector.vectorResource(id = screen.resourceId!!),
                         modifier = Modifier.size(24.dp),
-                        tint = AppDesign.colors.textColor
+                        contentDescription = ""
                     )
                 }
             }
         }
     }
-}
-
-object BottomItems {
-    val NavItems = listOf(
-        BottomNavItem(
-            icon = R.drawable.icon_statistics,
-            route = RoutesNavigation.STATISTICS
-        ),
-        BottomNavItem(
-            icon = R.drawable.icon_goals,
-            route = RoutesNavigation.GOALS
-        ),
-        BottomNavItem(
-            icon = R.drawable.icon_menu,
-            route = RoutesNavigation.MENU
-        )
-    )
 }

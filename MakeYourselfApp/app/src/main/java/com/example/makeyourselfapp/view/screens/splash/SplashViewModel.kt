@@ -19,7 +19,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
                 delay(2000L)
 
                 controller.navigate(RoutesNavigation.AUTH) {
-                    isVisible.value = true
+                    isVisible.value = false
                     popUpTo(RoutesNavigation.SPLASH) {
                         inclusive = true
                     }

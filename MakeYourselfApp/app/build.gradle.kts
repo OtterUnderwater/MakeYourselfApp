@@ -71,12 +71,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    val nav_version = "2.8.1"
+    val nav_version = "2.7.7"
     val supabase_version = "2.6.1"
     val ktor_version = "2.3.10"
 
     //Навигация по страницам
-    implementation ("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 
     //supabase
     implementation(platform("io.github.jan-tennert.supabase:bom:$supabase_version"))
