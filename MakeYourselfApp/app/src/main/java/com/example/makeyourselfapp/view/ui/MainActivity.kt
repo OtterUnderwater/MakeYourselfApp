@@ -1,6 +1,7 @@
 package com.example.makeyourselfapp.view.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,11 +14,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 import com.example.makeyourselfapp.domain.navigation.Navigation
+import com.example.makeyourselfapp.domain.repository.PrefManager
 import com.example.makeyourselfapp.models.theme.CurrentTheme
-import com.example.makeyourselfapp.view.screens.bottombar.BottomBarCustom
-import com.example.makeyourselfapp.view.screens.topbar.TopBarCustom
+import com.example.makeyourselfapp.view.panels.bottombar.BottomBarCustom
+import com.example.makeyourselfapp.view.panels.topbar.TopBarCustom
 import com.example.makeyourselfapp.view.ui.theme.MakeYourselfAppTheme
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 import com.example.makeyourselfapp.view.ui.theme.ListColorTheme
@@ -31,8 +34,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             //цвета нижней и верхней панели
-            window.statusBarColor = AppDesign.colors.background.toArgb()
-            window.navigationBarColor = AppDesign.colors.background.toArgb()
+            window.statusBarColor = AppDesign.colors.lightBackground.toArgb()
+            window.navigationBarColor = AppDesign.colors.lightBackground.toArgb()
+            PrefManager.init(LocalContext.current)
             val controller = rememberNavController()
             val theme = remember { mutableStateOf(CurrentTheme(0, ListColorTheme[0])) }
             val isVisibleBar = remember { mutableStateOf(false) }

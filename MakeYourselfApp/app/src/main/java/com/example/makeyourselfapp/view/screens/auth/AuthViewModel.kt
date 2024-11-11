@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.domain.Constants
 import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
+import com.example.makeyourselfapp.domain.repository.PrefManager.status
 import com.example.makeyourselfapp.models.screens.StateUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.gotrue.auth
@@ -43,7 +44,8 @@ class AuthViewModel @Inject constructor() : ViewModel() {
                         email = user.login
                         password = user.password
                     }
-                    controller.navigate(RoutesNavigation.AUTH) {
+                    status = 1 //Пользователь авторизировался
+                    controller.navigate(RoutesNavigation.GOALS) {
                         popUpTo(RoutesNavigation.AUTH) {
                             inclusive = true
                         }

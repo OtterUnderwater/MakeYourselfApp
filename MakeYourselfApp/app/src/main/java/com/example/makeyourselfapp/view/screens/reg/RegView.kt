@@ -38,12 +38,23 @@ fun RegView (controller: NavController, viewModel: RegViewModel = hiltViewModel(
             Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
                 TextTittlePrimary("Регистрация")
             }
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Spacer(modifier = Modifier.height(30.dp))
-
+            Spacer(modifier = Modifier.height(28.dp))
+            TextFieldBase(viewModel.user.name,
+                { viewModel.setUser(viewModel.user.copy(name = it))},
+                "Имя")
+            Spacer(modifier = Modifier.height(28.dp))
+            TextFieldBase(viewModel.user.login,
+                { viewModel.setUser(viewModel.user.copy(login = it))},
+                "Логин")
+            Spacer(modifier = Modifier.height(28.dp))
+            TextFieldBase(viewModel.user.password,
+                { viewModel.setUser(viewModel.user.copy(password = it))},
+                "Пароль")
+            Spacer(modifier = Modifier.height(28.dp))
+            TextFieldBase(viewModel.user.twoPassword,
+                { viewModel.setUser(viewModel.user.copy(twoPassword = it))},
+                "Повторите пароль")
+            Spacer(modifier = Modifier.height(28.dp))
             ButtonPrimary("Зарегистрировать", stateButton) { viewModel.signUp(controller) }
             Spacer(modifier = Modifier.height(80.dp))
             Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {

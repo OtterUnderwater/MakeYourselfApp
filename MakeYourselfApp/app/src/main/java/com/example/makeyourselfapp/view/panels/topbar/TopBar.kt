@@ -1,4 +1,4 @@
-package com.example.makeyourselfapp.view.screens.topbar
+package com.example.makeyourselfapp.view.panels.topbar
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -43,7 +43,7 @@ fun TopBarCustom(controller: NavHostController, theme: MutableState<CurrentTheme
         modifier = Modifier
             .height(100.dp)
             .fillMaxWidth()
-            .background(AppDesign.colors.background),
+            .background(AppDesign.colors.lightBackground),
         contentAlignment = Alignment.BottomCenter
     ) {
         Row( modifier = Modifier.fillMaxWidth(),

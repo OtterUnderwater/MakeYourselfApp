@@ -1,4 +1,4 @@
-package com.example.makeyourselfapp.view.screens.bottombar
+package com.example.makeyourselfapp.view.panels.bottombar
 
 import com.example.makeyourselfapp.R
 import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
@@ -21,4 +21,4 @@ sealed class BottomBarItems(
     )
 }
 
-val ScreenItems = listOf(BottomBarItems.Statistics,  BottomBarItems.Goals, BottomBarItems.Menu)
+val ScreenItems = listOf(BottomBarItems.Statistics, BottomBarItems.Goals, BottomBarItems.Menu)

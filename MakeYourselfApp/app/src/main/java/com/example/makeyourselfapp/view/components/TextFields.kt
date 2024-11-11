@@ -22,7 +22,7 @@ fun TextFieldBase(value: String, input: (String) -> Unit, placeholder: String) {
     OutlinedTextField(
         value = value, //текущее значение
         onValueChange = {input(it) }, //передаем введенный текст в лямда функцию
-        textStyle = MaterialTheme.typography.bodySmall.copy(color = Color.Black),
+        textStyle = AppDesign.typography.bodyMedium.copy(color = AppDesign.colors.textColor),
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
@@ -48,6 +48,7 @@ fun TextFieldPassword(value: String, input: (String) -> Unit, placeholder: Strin
     OutlinedTextField(
         value = value, //текущее значение
         onValueChange = { input(it) }, //передаем введенный текст
+        textStyle = AppDesign.typography.bodyMedium.copy(color = AppDesign.colors.textColor),
         modifier = Modifier
             .fillMaxWidth()
             .shadow( elevation = 4.dp, shape = RoundedCornerShape(30)),

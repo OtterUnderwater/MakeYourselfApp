@@ -1,4 +1,4 @@
-package com.example.makeyourselfapp.view.screens.bottombar
+package com.example.makeyourselfapp.view.panels.bottombar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,13 +27,12 @@ import com.example.makeyourselfapp.view.ui.theme.AppDesign
 @Composable
 fun BottomBarCustom(controller: NavHostController) {
     Box(
-        modifier = Modifier.height(90.dp).fillMaxWidth()
-            .background(AppDesign.colors.background).padding(bottom = 20.dp),
+        modifier = Modifier.height(120.dp).fillMaxWidth()
+            .background(AppDesign.colors.lightBackground).padding(bottom = 20.dp),
         contentAlignment = Alignment.TopCenter
     ) {
         val navBackStackEntry by controller.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
-        Divider(thickness = 2.dp, color = AppDesign.colors.lightBackground)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Absolute.SpaceAround

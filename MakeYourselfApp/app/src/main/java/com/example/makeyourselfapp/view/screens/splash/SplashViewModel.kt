@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
+import com.example.makeyourselfapp.domain.repository.PrefManager.status
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -17,29 +18,23 @@ class SplashViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 delay(2000L)
-
-                controller.navigate(RoutesNavigation.AUTH) {
-                    isVisible.value = true
-                    popUpTo(RoutesNavigation.SPLASH) {
-                        inclusive = true
-                    }
-                }
-
-                /*if(service.userIsAuth()){
-                controller.navigate(RoutesNavigation.GOALS) {
-                    isVisible.value = true
-                    popUpTo(RoutesNavigation.SPLASH) {
-                        inclusive = true
-                    }
-                }}
-                else {
-                isVisible.value = false
+                //supabase.auth.currentUserOrNull() != null
+                if(status == 0){
+                    isVisible.value =  false
                     controller.navigate(RoutesNavigation.AUTH) {
-                        popUpTo(NavigationRoutes.SPLASH) {
+                        popUpTo(RoutesNavigation.SPLASH) {
                             inclusive = true
                         }
                     }
-                }*/
+                }
+                else {
+                    isVisible.value = true
+                    controller.navigate(RoutesNavigation.GOALS) {
+                        popUpTo(RoutesNavigation.SPLASH) {
+                            inclusive = true
+                        }
+                    }
+                }
             }
         }
     }
