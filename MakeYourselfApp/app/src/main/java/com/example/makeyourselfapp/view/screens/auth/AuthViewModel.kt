@@ -45,7 +45,7 @@ class AuthViewModel @Inject constructor() : ViewModel() {
                         password = user.password
                     }
                     status = 1 //Пользователь авторизировался
-                    controller.navigate(RoutesNavigation.GOALS) {
+                    controller.navigate(RoutesNavigation.SPLASH) {
                         popUpTo(RoutesNavigation.AUTH) {
                             inclusive = true
                         }
