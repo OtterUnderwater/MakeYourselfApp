@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.makeyourselfapp.view.screens.auth.AuthView
 import com.example.makeyourselfapp.view.screens.goals.GoalsView
+import com.example.makeyourselfapp.view.screens.itemGoal.ItemGoalView
 import com.example.makeyourselfapp.view.screens.menu.MenuView
 import com.example.makeyourselfapp.view.screens.reg.RegView
 import com.example.makeyourselfapp.view.screens.splash.Splash
@@ -35,6 +36,9 @@ fun Navigation(controller: NavHostController, isVisibleBar: MutableState<Boolean
         }
         composable(RoutesNavigation.REG) {
             RegView(controller)
+        }
+        composable(RoutesNavigation.ITEM_GOAL) {
+            ItemGoalView(controller)
         }
     }
 }

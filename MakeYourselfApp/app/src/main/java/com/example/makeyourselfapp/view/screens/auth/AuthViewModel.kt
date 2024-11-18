@@ -8,10 +8,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.domain.Constants
+import com.example.makeyourselfapp.domain.Constants.supabase
 import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
-import com.example.makeyourselfapp.domain.repository.PrefManager.status
+import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
 import com.example.makeyourselfapp.models.screens.StateUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.gotrue.auth
@@ -44,7 +44,7 @@ class AuthViewModel @Inject constructor() : ViewModel() {
                         email = user.login
                         password = user.password
                     }
-                    status = 1 //Пользователь авторизировался
+                    currentUser = supabase.auth.currentUserOrNull()?.id//Пользователь авторизировался
                     controller.navigate(RoutesNavigation.SPLASH) {
                         popUpTo(RoutesNavigation.AUTH) {
                             inclusive = true

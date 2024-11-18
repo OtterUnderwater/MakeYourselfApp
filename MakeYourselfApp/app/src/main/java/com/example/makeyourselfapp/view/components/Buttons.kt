@@ -25,11 +25,6 @@ fun ButtonPrimary(text: String, enabled: Boolean = true, onClick: () -> Unit){
         shape = RoundedCornerShape(15.dp),
         enabled = enabled
     ) {
-        Text(
-            text = text,
-            modifier = Modifier.padding(vertical = 8.dp),
-            color = Color.White,
-            fontWeight = FontWeight.Bold
-        )
+        TextBodyBold(text, Modifier.padding(vertical = 8.dp))
     }
 }

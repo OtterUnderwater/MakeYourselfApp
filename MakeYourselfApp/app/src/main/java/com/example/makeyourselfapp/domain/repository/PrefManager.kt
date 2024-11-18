@@ -11,7 +11,7 @@ object PrefManager {
         statusSystem = context.getSharedPreferences("statusSystem", Context.MODE_PRIVATE)
     }
 
-    var status: Int
-        get() = statusSystem.getInt("status", 0)
-        set(value) = statusSystem.edit().putInt("status", value).apply()
+    var currentUser: String?
+        get() = statusSystem.getString("currentUser", null)
+        set(value) = statusSystem.edit().putString("currentUser", value).apply()
 }

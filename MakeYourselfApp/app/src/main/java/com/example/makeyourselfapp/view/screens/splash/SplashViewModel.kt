@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
-import com.example.makeyourselfapp.domain.repository.PrefManager.status
+import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,8 +18,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 delay(2000L)
-                //supabase.auth.currentUserOrNull() != null
-                if(status == 0){
+                if(currentUser == null){ //пользователь не авторизирован
                     isVisible.value =  false
                     controller.navigate(RoutesNavigation.AUTH) {
                         popUpTo(RoutesNavigation.SPLASH) {

@@ -25,6 +25,26 @@ fun TextTittle(text: String){
 }
 
 @Composable
+fun TextBodyBold(text: String, modifier: Modifier){
+    Text(
+        text = text,
+        style = AppDesign.typography.bodyBold,
+        color = AppDesign.colors.textColor,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun TextBodyField(text: String, modifier: Modifier){
+    Text(
+        text = text,
+        style = AppDesign.typography.bodyBold,
+        color = AppDesign.colors.textColor,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun TextClickable(text: String, onClick: () -> Unit){
     Text(
         text = text,

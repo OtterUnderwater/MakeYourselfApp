@@ -21,7 +21,6 @@ import androidx.navigation.NavController
 import com.example.makeyourselfapp.view.components.ButtonPrimary
 import com.example.makeyourselfapp.view.components.TextClickable
 import com.example.makeyourselfapp.view.components.TextFieldBase
-import com.example.makeyourselfapp.view.components.TextFieldPassword
 import com.example.makeyourselfapp.view.components.TextTittle
 import com.example.makeyourselfapp.view.components.TextTittlePrimary
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
@@ -39,21 +38,17 @@ fun RegView (controller: NavController, viewModel: RegViewModel = hiltViewModel(
                 TextTittlePrimary("Регистрация")
             }
             Spacer(modifier = Modifier.height(28.dp))
-            TextFieldBase(viewModel.user.name,
-                { viewModel.setUser(viewModel.user.copy(name = it))},
-                "Имя")
+            TextFieldBase(viewModel.user.name, "Имя")
+            { viewModel.setUser(viewModel.user.copy(name = it))}
             Spacer(modifier = Modifier.height(28.dp))
-            TextFieldBase(viewModel.user.login,
-                { viewModel.setUser(viewModel.user.copy(login = it))},
-                "Логин")
+            TextFieldBase(viewModel.user.login, "Логин" )
+            { viewModel.setUser(viewModel.user.copy(login = it))}
             Spacer(modifier = Modifier.height(28.dp))
-            TextFieldBase(viewModel.user.password,
-                { viewModel.setUser(viewModel.user.copy(password = it))},
-                "Пароль")
+            TextFieldBase(viewModel.user.password, "Пароль")
+            { viewModel.setUser(viewModel.user.copy(password = it))}
             Spacer(modifier = Modifier.height(28.dp))
-            TextFieldBase(viewModel.user.twoPassword,
-                { viewModel.setUser(viewModel.user.copy(twoPassword = it))},
-                "Повторите пароль")
+            TextFieldBase(viewModel.user.twoPassword, "Повторите пароль")
+            { viewModel.setUser(viewModel.user.copy(twoPassword = it))}
             Spacer(modifier = Modifier.height(28.dp))
             ButtonPrimary("Зарегистрировать", stateButton) { viewModel.signUp(controller) }
             Spacer(modifier = Modifier.height(80.dp))

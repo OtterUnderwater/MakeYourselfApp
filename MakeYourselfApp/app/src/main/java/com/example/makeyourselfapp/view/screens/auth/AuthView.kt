@@ -39,13 +39,11 @@ fun AuthView(controller: NavController, viewModel: AuthViewModel = hiltViewModel
                 TextTittlePrimary("Авторизация")
             }
             Spacer(modifier = Modifier.height(30.dp))
-            TextFieldBase(viewModel.user.login,
-                { viewModel.setUser(viewModel.user.copy(login = it))},
-                "Логин")
+            TextFieldBase(viewModel.user.login,"Логин")
+            { viewModel.setUser(viewModel.user.copy(login = it))}
             Spacer(modifier = Modifier.height(30.dp))
-            TextFieldPassword(viewModel.user.password,
-                { viewModel.setUser(viewModel.user.copy(password = it))},
-                "Пароль")
+            TextFieldPassword(viewModel.user.password,"Пароль")
+            { viewModel.setUser(viewModel.user.copy(password = it))}
             Spacer(modifier = Modifier.height(30.dp))
             ButtonPrimary("Войти", stateButton) { viewModel.signIn(controller) }
             Spacer(modifier = Modifier.height(80.dp))

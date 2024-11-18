@@ -18,21 +18,15 @@ import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFieldBase(value: String, input: (String) -> Unit, placeholder: String) {
+fun TextFieldBase(value: String, placeholder: String, input: (String) -> Unit) {
     OutlinedTextField(
         value = value, //текущее значение
-        onValueChange = {input(it) }, //передаем введенный текст в лямда функцию
+        onValueChange = { input(it) }, //передаем введенный текст в лямда функцию
         textStyle = AppDesign.typography.bodyMedium.copy(color = AppDesign.colors.textColor),
-        modifier = Modifier
-            .fillMaxWidth()
-            .shadow(
-                elevation = 4.dp, shape = RoundedCornerShape(30), spotColor = Color(
-                    Black.value
-                )
-            ),
-        placeholder = { Text(text = placeholder) },
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(text = placeholder, color = AppDesign.colors.additional) },
         singleLine = true,
-        shape = RoundedCornerShape(15.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = outlinedTextFieldColors(
             unfocusedBorderColor = Color.Transparent,
             focusedBorderColor = AppDesign.colors.primary,
@@ -44,17 +38,55 @@ fun TextFieldBase(value: String, input: (String) -> Unit, placeholder: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFieldPassword(value: String, input: (String) -> Unit, placeholder: String) {
+fun TextFieldSmall(value: String, placeholder: String, input: (String) -> Unit) {
     OutlinedTextField(
-        value = value, //текущее значение
-        onValueChange = { input(it) }, //передаем введенный текст
+        value = value,
+        onValueChange = { input(it) },
         textStyle = AppDesign.typography.bodyMedium.copy(color = AppDesign.colors.textColor),
-        modifier = Modifier
-            .fillMaxWidth()
-            .shadow( elevation = 4.dp, shape = RoundedCornerShape(30)),
-        placeholder = { Text(text = placeholder) },
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(text = placeholder, color = AppDesign.colors.additional) },
         singleLine = true,
-        shape = RoundedCornerShape(15.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = outlinedTextFieldColors(
+            unfocusedBorderColor = AppDesign.colors.primary,
+            focusedBorderColor = AppDesign.colors.primary,
+            containerColor = AppDesign.colors.lightBackground,
+            cursorColor = AppDesign.colors.primary
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TextFieldBig(value: String, placeholder: String, input: (String) -> Unit) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = { input(it) },
+        textStyle = AppDesign.typography.bodyMedium.copy(color = AppDesign.colors.textColor),
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(text = placeholder, color = AppDesign.colors.additional) },
+        singleLine = false,
+        shape = RoundedCornerShape(16.dp),
+        colors = outlinedTextFieldColors(
+            unfocusedBorderColor = AppDesign.colors.primary,
+            focusedBorderColor = AppDesign.colors.primary,
+            containerColor = AppDesign.colors.lightBackground,
+            cursorColor = AppDesign.colors.primary
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TextFieldPassword(value: String, placeholder: String, input: (String) -> Unit) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = { input(it) },
+        textStyle = AppDesign.typography.bodyMedium.copy(color = AppDesign.colors.textColor),
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(text = placeholder, color = AppDesign.colors.additional) },
+        singleLine = true,
+        shape = RoundedCornerShape(16.dp),
         colors = outlinedTextFieldColors(
             unfocusedBorderColor = Color.Transparent,
             focusedBorderColor = AppDesign.colors.primary,

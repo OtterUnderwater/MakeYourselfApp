@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Spheres(
-    var id: String = "",
+    var id: Int = 0,
     @SerialName("id_user")
     var idUser: String = "",
     var name: String = ""
