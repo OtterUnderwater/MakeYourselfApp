@@ -26,8 +26,8 @@ class GoalsViewModel @Inject constructor() : ViewModel() {
                     filter { eq("id_user", currentUser!!) }
                 }.decodeList<Goals>()
                 if (list != null){
-                    _state.value.notCompletedGoals = list.filter { it -> it.status == false}
-                    _state.value.completedGoals = list.filter { it -> it.status == true}
+                    _state.value.notCompletedGoals = list.filter {it.status == false}
+                    _state.value.completedGoals = list.filter { it.status == true}
                 }
             }
         }

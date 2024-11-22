@@ -16,6 +16,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
@@ -25,6 +29,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,13 +37,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.R
+import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
+import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
 import com.example.makeyourselfapp.models.theme.CurrentTheme
+import com.example.makeyourselfapp.view.components.AddTaskView
+import com.example.makeyourselfapp.view.components.ButtonPrimary
 import com.example.makeyourselfapp.view.components.TextTittle
+import com.example.makeyourselfapp.view.components.YesOrNo
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 import com.example.makeyourselfapp.view.ui.theme.ListColorTheme
 
 @Composable
 fun TopBarCustom(controller: NavHostController, theme: MutableState<CurrentTheme>){
+    var showDialog by remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .height(100.dp)
@@ -51,7 +62,10 @@ fun TopBarCustom(controller: NavHostController, theme: MutableState<CurrentTheme
             verticalAlignment = Alignment.CenterVertically)
         {
             val gradient = Brush.verticalGradient(AppDesign.colors.gradient)
-            IconButton(onClick = {})
+            IconButton(
+                onClick = {
+                    showDialog = true
+                })
             {
                 Box(Modifier.size(24.dp), contentAlignment = Alignment.Center) {
                     Canvas(Modifier.size(24.dp)) {
@@ -72,7 +86,7 @@ fun TopBarCustom(controller: NavHostController, theme: MutableState<CurrentTheme
                     )
                 }
             }
-            TextTittle("Make Yourself")
+            TextTittle("Make Yourself", null)
             IconButton(
                 onClick = {
                     val nextIndex = (theme.value.index + 1) % 5
@@ -95,5 +109,10 @@ fun TopBarCustom(controller: NavHostController, theme: MutableState<CurrentTheme
             }
         }
         Divider( thickness = 2.dp, color = AppDesign.colors.lightBackground)
+    }
+    if (showDialog) {
+        YesOrNo(controller){
+            showDialog = false
+        }
     }
 }

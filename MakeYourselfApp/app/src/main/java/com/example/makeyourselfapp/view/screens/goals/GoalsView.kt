@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.view.components.ButtonPrimary
 import com.example.makeyourselfapp.view.components.TextBodyBold
+import com.example.makeyourselfapp.view.components.TextBodyMedium
 import com.example.makeyourselfapp.view.components.TextTittle
 import com.example.makeyourselfapp.view.screens.reg.RegViewModel
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
@@ -39,13 +40,13 @@ fun GoalsView(controller: NavHostController, viewModel: GoalsViewModel = hiltVie
         viewModel.launch()
     }
 
-    Column(modifier = Modifier.padding(horizontal = 24.dp).padding(vertical = 30.dp)) {
+    Column(modifier = Modifier.padding(horizontal = 28.dp).padding(vertical = 32.dp)) {
         ButtonPrimary("Создать новую цель", true){ viewModel.createItem(controller) }
         Spacer(modifier = Modifier.height(12.dp))
-        TextTittle("Не выполненые:")
+        TextTittle("Не выполненые:", null)
         Spacer(modifier = Modifier.height(12.dp))
         if (state.notCompletedGoals != null){
-            state.notCompletedGoals!!.forEach { it ->
+            state.notCompletedGoals!!.forEach {
                 Box(
                     modifier = Modifier.fillMaxWidth()
                         .background(AppDesign.colors.primary, RoundedCornerShape(16.dp))
@@ -56,11 +57,11 @@ fun GoalsView(controller: NavHostController, viewModel: GoalsViewModel = hiltVie
                 Spacer(modifier = Modifier.height(12.dp))
             }
         }
-        else TextTittle("Нет задач")
-        TextTittle("Завершенные:")
+        else TextTittle("Нет задач", null)
+        TextTittle("Завершенные:", null)
         Spacer(modifier = Modifier.height(12.dp))
         if (state.completedGoals != null){
-            state.completedGoals!!.forEach { it ->
+            state.completedGoals!!.forEach {
                 Box(
                     modifier = Modifier.fillMaxWidth()
                         .background(AppDesign.colors.lightBackground, RoundedCornerShape(16.dp))
@@ -71,5 +72,6 @@ fun GoalsView(controller: NavHostController, viewModel: GoalsViewModel = hiltVie
                 Spacer(modifier = Modifier.height(12.dp))
             }
         }
+        else TextTittle("Нет задач", null)
     }
 }

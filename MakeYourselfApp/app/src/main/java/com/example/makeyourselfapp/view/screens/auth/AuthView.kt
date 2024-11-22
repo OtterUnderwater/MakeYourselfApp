@@ -36,7 +36,7 @@ fun AuthView(controller: NavController, viewModel: AuthViewModel = hiltViewModel
         verticalArrangement = Arrangement.Center) {
         Column(modifier = Modifier.padding(horizontal = 24.dp)) {
             Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
-                TextTittlePrimary("Авторизация")
+                TextTittlePrimary("Авторизация", null)
             }
             Spacer(modifier = Modifier.height(30.dp))
             TextFieldBase(viewModel.user.login,"Логин")
@@ -45,12 +45,16 @@ fun AuthView(controller: NavController, viewModel: AuthViewModel = hiltViewModel
             TextFieldPassword(viewModel.user.password,"Пароль")
             { viewModel.setUser(viewModel.user.copy(password = it))}
             Spacer(modifier = Modifier.height(30.dp))
-            ButtonPrimary("Войти", stateButton) { viewModel.signIn(controller) }
+            ButtonPrimary("Войти", stateButton) {
+                viewModel.signIn(controller)
+            }
             Spacer(modifier = Modifier.height(80.dp))
             Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
-                TextTittle("Нет аккаунта?")
+                TextTittle("Нет аккаунта?", null)
                 Spacer(modifier = Modifier.width(8.dp))
-                TextClickable("Зарегистрируйтесь") { viewModel.goReg(controller) }
+                TextClickable("Зарегистрируйтесь") {
+                    viewModel.goReg(controller)
+                }
             }
         }
     }

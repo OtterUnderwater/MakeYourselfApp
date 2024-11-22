@@ -11,7 +11,7 @@ data class Tasks(
     @SerialName("name_task")
     var nameTask: String = "",
     var description: String = "",
-    var status: String = "",
+    var status: Boolean = false,
     @SerialName("id_category")
-    var idCategory: String = ""
+    var idCategory: Int = 1
 )
