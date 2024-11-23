@@ -86,7 +86,7 @@ fun TopBarCustom(controller: NavHostController, theme: MutableState<CurrentTheme
                     )
                 }
             }
-            TextTittle("Make Yourself", null)
+            TextTittle("Make Yourself")
             IconButton(
                 onClick = {
                     val nextIndex = (theme.value.index + 1) % 5

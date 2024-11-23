@@ -1,5 +1,6 @@
 package com.example.makeyourselfapp.view.screens.goals
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GoalsViewModel @Inject constructor() : ViewModel() {
-    private val _state = mutableStateOf(StateGoals())
-    val state: StateGoals get() = _state.value
+    private val _state by mutableStateOf(StateGoals())
+    val state: StateGoals get() = _state
 
     fun launch(){
         viewModelScope.launch {
@@ -25,11 +26,12 @@ class GoalsViewModel @Inject constructor() : ViewModel() {
                 val list = supabase.from("Goals").select() {
                     filter { eq("id_user", currentUser!!) }
                 }.decodeList<Goals>()
-                if (list != null){
-                    _state.value.notCompletedGoals = list.filter {it.status == false}
-                    _state.value.completedGoals = list.filter { it.status == true}
+                if (list.isNotEmpty()){
+                    _state.notCompletedGoals = list.filter {it.status == false}
+                    _state.completedGoals = list.filter { it.status == true}
                 }
             }
+            _state.loading = false
         }
     }
 

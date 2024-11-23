@@ -7,7 +7,7 @@ import com.example.makeyourselfapp.models.database.Tasks
 
 data class StateItemGoal(
     var goal: Goals = Goals(),
-    var listSphere: List<Spheres> = listOf(),
+    var listSpheres: List<Spheres> = listOf(),
     var listTasks: MutableList<Tasks> = mutableListOf<Tasks>(),
     var listCategories: List<Categories> = listOf(),
     var loading: Boolean = true

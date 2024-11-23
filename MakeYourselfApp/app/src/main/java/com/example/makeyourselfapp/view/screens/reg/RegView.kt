@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -35,7 +36,7 @@ fun RegView (controller: NavController, viewModel: RegViewModel = hiltViewModel(
         verticalArrangement = Arrangement.Center) {
         Column(modifier = Modifier.padding(horizontal = 24.dp)) {
             Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
-                TextTittlePrimary("Регистрация", null)
+                TextTittlePrimary("Регистрация")
             }
             Spacer(modifier = Modifier.height(28.dp))
             TextFieldBase(viewModel.user.name, "Имя")
@@ -54,10 +55,10 @@ fun RegView (controller: NavController, viewModel: RegViewModel = hiltViewModel(
                 viewModel.signUp(controller)
             }
             Spacer(modifier = Modifier.height(80.dp))
-            Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
-                TextTittle("Есть аккаунт?", null)
-                Spacer(modifier = Modifier.width(8.dp))
-                TextClickable("Войти") { viewModel.goAuth(controller) }
+            TextTittle("Есть аккаунт?", Modifier.align(Alignment.CenterHorizontally))
+            Spacer(modifier = Modifier.height(8.dp))
+            TextClickable("Войти", Modifier.align(Alignment.CenterHorizontally)) {
+                viewModel.goAuth(controller)
             }
         }
     }

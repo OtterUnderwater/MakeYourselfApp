@@ -12,52 +12,52 @@ import androidx.compose.ui.unit.dp
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
 @Composable
-fun TextTittlePrimary(text: String, modifier: Modifier?){
+fun TextTittlePrimary(text: String, modifier: Modifier = Modifier){
     Text(
         text = text,
         style = AppDesign.typography.titleLarge,
         color = AppDesign.colors.primary,
-        modifier = modifier?: Modifier
+        modifier = modifier
     )
 }
 
 @Composable
-fun TextTittle(text: String, modifier: Modifier?){
+fun TextTittle(text: String, modifier: Modifier = Modifier){
     Text(
         text = text,
         style = AppDesign.typography.titleMedium,
         color = AppDesign.colors.textColor,
-        modifier = modifier?: Modifier
+        modifier = modifier
     )
 }
 
 @Composable
-fun TextBodyBold(text: String, modifier: Modifier?){
+fun TextBodyBold(text: String, modifier: Modifier = Modifier){
     Text(
         text = text,
         style = AppDesign.typography.bodyBold,
         color = AppDesign.colors.textColor,
-        modifier = modifier?: Modifier
+        modifier = modifier
     )
 }
 
 @Composable
-fun TextBodyMedium(text: String, modifier: Modifier?){
+fun TextBodyMedium(text: String, modifier: Modifier = Modifier){
     Text(
         text = text,
         style = AppDesign.typography.bodyMedium,
         color = AppDesign.colors.textColor,
-        modifier = modifier?: Modifier
+        modifier = modifier
     )
 }
 
 @Composable
-fun TextClickable(text: String, onClick: () -> Unit){
+fun TextClickable(text: String, modifier: Modifier = Modifier, onClick: () -> Unit){
     Text(
         text = text,
         style = AppDesign.typography.titleMedium,
         color = AppDesign.colors.primary,
-        modifier = Modifier.clickable(onClick = { onClick() })
+        modifier = modifier.clickable(onClick = { onClick() })
     )
 }
 

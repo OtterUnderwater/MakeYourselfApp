@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,39 +30,43 @@ fun MenuView(controller: NavHostController, viewModel: MenuViewModel = hiltViewM
     LaunchedEffect(Unit) { viewModel.launch() }
     val listColor = listOf(AppDesign.colors.accent, AppDesign.colors.tertiary,
         AppDesign.colors.secondary, AppDesign.colors.primary)
+
     if (state.loading) {
         CircularProgressCenter()
     } else {
-        Column{
+        Column (modifier = Modifier.verticalScroll(rememberScrollState())){
             Spacer(modifier = Modifier.height(24.dp))
-        state.listCategories.forEach { category ->
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-                    .background(listColor[category.id - 1], RoundedCornerShape(16.dp))
-                    .padding(24.dp)
-            ) {
-                TextTittle(category.category, null)
-                Spacer(modifier = Modifier.height(12.dp))
-                if (state.listTasks.count() != 0){
+            state.listCategories.forEach { category ->
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+                        .background(listColor[category.id - 1], RoundedCornerShape(16.dp))
+                        .padding(24.dp)
+                ) {
+                    TextTittle(category.category)
+                    Spacer(modifier = Modifier.height(12.dp))
                     Divider( thickness = 2.dp, color = AppDesign.colors.additional)
-                    state.listTasks.forEach { task ->
-                        if (task.idCategory == category.id){
-                            Spacer(modifier = Modifier.height(12.dp))
-                            Row(
-                                modifier = Modifier.fillMaxWidth()
-                                    .background(AppDesign.colors.lightBackground,
-                                        RoundedCornerShape(16.dp))
-                                    .padding(horizontal = 8.dp)
-                            ) {
-                                CheckBoxMenu(task.status, listColor[category.id - 1]) {
-                                    viewModel.changeStatus(task.id, it)
+                    if (state.listTasks.count() != 0){
+                        state.listTasks.forEach { task ->
+                            if (task.idCategory == category.id){
+                                Spacer(modifier = Modifier.height(12.dp))
+                                Row(
+                                    modifier = Modifier.fillMaxWidth()
+                                        .background(AppDesign.colors.lightBackground,
+                                            RoundedCornerShape(16.dp))
+                                        .padding(horizontal = 8.dp)
+                                ) {
+                                    CheckBoxMenu(task.status, listColor[category.id - 1]) {
+                                        viewModel.changeStatus(task.id, it)
+                                    }
+                                    TextBodyBold(task.nameTask!!, Modifier.align(Alignment.CenterVertically))
                                 }
-                                TextBodyBold(task.nameTask, Modifier.align(Alignment.CenterVertically))
                             }
                         }
                     }
+                    else TextBodyBold("Нет задач", Modifier.padding(top = 12.dp))
                 }
+                Spacer(modifier = Modifier.height(24.dp))
             }
-            Spacer(modifier = Modifier.height(24.dp))
-    } }
-}}
+        }
+    }
+}

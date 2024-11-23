@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,7 @@ fun AuthView(controller: NavController, viewModel: AuthViewModel = hiltViewModel
         verticalArrangement = Arrangement.Center) {
         Column(modifier = Modifier.padding(horizontal = 24.dp)) {
             Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
-                TextTittlePrimary("Авторизация", null)
+                TextTittlePrimary("Авторизация")
             }
             Spacer(modifier = Modifier.height(30.dp))
             TextFieldBase(viewModel.user.login,"Логин")
@@ -49,12 +50,10 @@ fun AuthView(controller: NavController, viewModel: AuthViewModel = hiltViewModel
                 viewModel.signIn(controller)
             }
             Spacer(modifier = Modifier.height(80.dp))
-            Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
-                TextTittle("Нет аккаунта?", null)
-                Spacer(modifier = Modifier.width(8.dp))
-                TextClickable("Зарегистрируйтесь") {
-                    viewModel.goReg(controller)
-                }
+            TextTittle("Нет аккаунта?", Modifier.align(Alignment.CenterHorizontally))
+            Spacer(modifier = Modifier.height(8.dp))
+            TextClickable("Зарегистрируйтесь", Modifier.align(Alignment.CenterHorizontally)) {
+                viewModel.goReg(controller)
             }
         }
     }

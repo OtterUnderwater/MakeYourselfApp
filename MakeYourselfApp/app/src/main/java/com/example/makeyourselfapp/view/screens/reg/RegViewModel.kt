@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -24,11 +26,11 @@ class RegViewModel @Inject constructor() : ViewModel() {
     @SuppressLint("StaticFieldLeak")
     lateinit var context: Context
 
-    private val _user = mutableStateOf(StateUser())
-    val user: StateUser get() = _user.value
+    private var _user by mutableStateOf(StateUser())
+    val user: StateUser get() = _user
 
     fun setUser(newUser: StateUser) {
-        _user.value = newUser
+        _user = newUser
     }
 
     fun goAuth(controller: NavController) {

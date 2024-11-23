@@ -69,7 +69,8 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                 { viewModel.setGoals(state.goal.copy(description = it)) }
                 Spacer(modifier = Modifier.height(20.dp))
                 var expanded by remember { mutableStateOf(false) }
-                var selectedOption by remember { mutableStateOf<Spheres?>(state.listSphere.firstOrNull()) }
+                state.goal = state.goal.copy(idSphere = state.listSpheres.first().id)
+                var selectedOption by remember { mutableStateOf<Spheres?>(state.listSpheres.firstOrNull()) }
                 Box {
                     Row (modifier = Modifier.fillMaxWidth()
                         .onGloballyPositioned { dropdownWidth = with(providerDensity) { it.size.width.toDp() } }
@@ -83,7 +84,7 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                             .background(AppDesign.colors.lightBackground),
                                 onDismissRequest = { expanded = false },
                             ) {
-                                state.listSphere.forEach { it ->
+                                state.listSpheres.forEach { it ->
                                     DropdownMenuItem(
                                         onClick = {
                                             selectedOption = it
@@ -115,13 +116,13 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                                 .border(2.dp, AppDesign.colors.primary, RoundedCornerShape(16.dp))
                         ) {
                             CheckBoxMenu(task.status, AppDesign.colors.primary) {
-                                viewModel.changeStatus(task.nameTask, it)
+                                viewModel.changeStatus(task.id, it)
                             }
-                            TextBodyMedium(task.nameTask, Modifier.align(Alignment.CenterVertically))
+                            TextBodyMedium(task.nameTask!!, Modifier.align(Alignment.CenterVertically))
                         }
                 }
                 Spacer(modifier = Modifier.height(24.dp))
-                ButtonPrimary("Создать цель") {
+                ButtonPrimary("Создать цель", state.goal.name != "") {
                     state.goal.idUser = currentUser!!
                     viewModel.createGoal(controller)
                 }

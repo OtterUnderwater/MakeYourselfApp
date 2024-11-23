@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -12,6 +14,7 @@ import com.example.makeyourselfapp.domain.Constants
 import com.example.makeyourselfapp.domain.Constants.supabase
 import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
 import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
+import com.example.makeyourselfapp.models.screens.StateMenu
 import com.example.makeyourselfapp.models.screens.StateUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.gotrue.auth
@@ -25,11 +28,11 @@ class AuthViewModel @Inject constructor() : ViewModel() {
     @SuppressLint("StaticFieldLeak")
     lateinit var context: Context
 
-    private val _user = mutableStateOf(StateUser())
-    val user: StateUser get() = _user.value
+    private var _user by mutableStateOf(StateUser())
+    val user: StateUser get() = _user
 
     fun setUser(newUser: StateUser) {
-        _user.value = newUser
+        _user = newUser
     }
 
     fun goReg(controller: NavController) {

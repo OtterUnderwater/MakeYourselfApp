@@ -36,6 +36,7 @@ import com.example.makeyourselfapp.models.database.Categories
 import com.example.makeyourselfapp.models.database.Tasks
 import com.example.makeyourselfapp.view.screens.itemGoal.ItemGoalViewModel
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
+import java.util.UUID
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
@@ -44,7 +45,7 @@ fun AddTaskView(categories: List<Categories>, viewModel: ItemGoalViewModel, swit
     var dropdownWidth by remember {  mutableStateOf(0.dp) }
     val listColor = listOf(AppDesign.colors.accent, AppDesign.colors.tertiary,
         AppDesign.colors.secondary, AppDesign.colors.primary)
-    var task by remember {  mutableStateOf(Tasks(idCategory = 1, status = false))}
+    var task by remember {  mutableStateOf(Tasks(id = UUID.randomUUID().toString(), idCategory = 1, status = false))}
     Dialog(onDismissRequest = {switchDialog()} ) {
         Card(
             shape = RoundedCornerShape(16.dp),
@@ -87,11 +88,11 @@ fun AddTaskView(categories: List<Categories>, viewModel: ItemGoalViewModel, swit
                     }
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                TextFieldSmall(task.nameTask,"Наименование задачи") { task = task.copy(nameTask = it)}
+                TextFieldSmall(task.nameTask!!,"Наименование задачи") { task = task.copy(nameTask = it)}
                 Spacer(modifier = Modifier.height(20.dp))
-                TextFieldBig(task.description,"Описание") { task = task.copy(description = it) }
+                TextFieldBig(task.description!!, "Описание") { task = task.copy(description = it) }
                 Spacer(modifier = Modifier.height(20.dp))
-                ButtonPrimary("Добавить") {
+                ButtonPrimary("Добавить",task.nameTask != "") {
                     viewModel.addTasks(task)
                     switchDialog()
                 }

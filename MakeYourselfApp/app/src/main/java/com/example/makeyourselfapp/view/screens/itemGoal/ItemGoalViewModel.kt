@@ -35,16 +35,16 @@ class ItemGoalViewModel @Inject constructor() : ViewModel() {
 
     fun launch(){
         viewModelScope.launch {
-            _state.listSphere = supabase.from("Spheres").select()
+            _state.listSpheres = supabase.from("Spheres").select()
             { filter { eq("id_user", currentUser!!) } }.decodeList<Spheres>()
             _state.listCategories = supabase.from("Categories").select().decodeList<Categories>()
             _state.loading = false
         }
     }
 
-    fun changeStatus(name: String, value: Boolean){
+    fun changeStatus(id: String, value: Boolean){
         val newList = state.listTasks.map { task ->
-            if (task.nameTask == name) task.copy(status = value)
+            if (task.id == id) task.copy(status = value)
             else task
         }.toMutableList()
         _state = _state.copy(listTasks = newList)

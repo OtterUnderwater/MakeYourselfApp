@@ -28,7 +28,7 @@ class MenuViewModel @Inject constructor() : ViewModel()  {
             val listTasks = supabase.from("Tasks").select().decodeList<Tasks>()
             val listGoals = supabase.from("Goals").select()
             { filter { eq("id_user", currentUser!!) } }.decodeList<Goals>()
-            if (listGoals != null && listTasks != null)
+            if (listGoals.isNotEmpty() && listTasks.isNotEmpty() )
             {
                 listGoals.forEach { goal ->
                     listTasks.forEach { task ->
