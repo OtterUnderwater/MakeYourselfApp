@@ -32,13 +32,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
 import com.example.makeyourselfapp.models.database.Spheres
-import com.example.makeyourselfapp.view.components.AddTaskView
 import com.example.makeyourselfapp.view.components.ButtonPrimary
 import com.example.makeyourselfapp.view.components.CheckBoxMenu
 import com.example.makeyourselfapp.view.components.CircularProgressCenter
 import com.example.makeyourselfapp.view.components.TextBodyMedium
 import com.example.makeyourselfapp.view.components.TextFieldBig
 import com.example.makeyourselfapp.view.components.TextFieldSmall
+import com.example.makeyourselfapp.view.screens.dialogWindows.AddTaskView
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
 @Composable

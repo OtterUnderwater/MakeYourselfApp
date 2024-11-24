@@ -25,9 +25,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.view.components.CheckBoxMenu
 import com.example.makeyourselfapp.view.components.CircularProgressCenter
-import com.example.makeyourselfapp.view.components.TaskView
 import com.example.makeyourselfapp.view.components.TextBodyBold
 import com.example.makeyourselfapp.view.components.TextTittle
+import com.example.makeyourselfapp.view.screens.dialogWindows.TaskView
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
 @Composable

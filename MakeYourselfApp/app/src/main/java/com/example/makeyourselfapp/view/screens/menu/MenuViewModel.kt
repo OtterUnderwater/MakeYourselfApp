@@ -2,7 +2,6 @@ package com.example.makeyourselfapp.view.screens.menu
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,8 +14,6 @@ import com.example.makeyourselfapp.models.screens.StateMenu
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
-import kotlinx.serialization.SerialName
-import okhttp3.internal.concurrent.Task
 import javax.inject.Inject
 
 @HiltViewModel

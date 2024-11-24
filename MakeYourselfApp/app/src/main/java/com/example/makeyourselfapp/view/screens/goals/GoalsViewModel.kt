@@ -13,6 +13,7 @@ import com.example.makeyourselfapp.models.screens.StateGoals
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,8 +36,9 @@ class GoalsViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-   fun openItem(controller: NavHostController, idItem: String){
-       //controller.navigate(RoutesNavigation.ITEM_GOAL)
+   fun openItem(controller: NavHostController, item: Goals){
+       val json = Json.encodeToString(Goals.serializer(), item)
+       controller.navigate("${RoutesNavigation.INFO_GOAL}/$json")
    }
 
    fun createItem(controller: NavHostController){

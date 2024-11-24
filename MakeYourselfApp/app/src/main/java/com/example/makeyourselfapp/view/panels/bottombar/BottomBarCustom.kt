@@ -64,7 +64,7 @@ fun BottomBarCustom(controller: NavHostController) {
                 {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = screen.resourceId!!),
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(28.dp),
                         contentDescription = ""
                     )
                 }

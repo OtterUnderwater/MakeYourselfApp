@@ -16,9 +16,9 @@ val AccentBP = Color(0xFF9F4380)
 val GradientColorBP = listOf(PrimaryBP, AccentBP)
 
 // Цвета темы 2: green-crimson
-val PrimaryGC = Color(0xFF84AF9E)
-val SecondaryGC = Color(0xFFA48789)
-val TertiaryGC = Color(0xFFBF6576)
+val PrimaryGC = Color(0xFF54A082)
+val SecondaryGC = Color(0xFF76887A)
+val TertiaryGC = Color(0xFFA36870)
 val AccentGC = Color(0xFFDB4163)
 val GradientColorGC = listOf(PrimaryGC, AccentGC)
 

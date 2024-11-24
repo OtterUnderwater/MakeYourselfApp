@@ -56,20 +56,20 @@ fun GoalsView(controller: NavHostController, viewModel: GoalsViewModel = hiltVie
                         Box(
                             modifier = Modifier.fillMaxWidth()
                                 .background(AppDesign.colors.primary, RoundedCornerShape(16.dp))
-                                .clickable { viewModel.openItem(controller, it.id) }
+                                .clickable { viewModel.openItem(controller, it) }
                         ) {
                             TextBodyBold(it.name!!, Modifier.padding(16.dp))
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                 } else TextTittle("Нет задач")
-                TextTittle("Завершенные:", Modifier.padding(4.dp, 20.dp))
+                TextTittle("Завершенные:", Modifier.padding(4.dp, 8.dp, 4.dp, 20.dp))
                 if (state.completedGoals != null) {
                     state.completedGoals!!.forEach {
                         Box(
                             modifier = Modifier.fillMaxWidth()
                                 .background(AppDesign.colors.lightBackground, RoundedCornerShape(16.dp))
-                                .clickable { viewModel.openItem(controller, it.id) }
+                                .clickable { viewModel.openItem(controller, it) }
                         ) {
                             TextBodyBold(it.name!!, Modifier.padding(16.dp))
                         }
