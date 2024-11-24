@@ -15,6 +15,8 @@ import com.example.makeyourselfapp.models.screens.StateMenu
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
+import kotlinx.serialization.SerialName
+import okhttp3.internal.concurrent.Task
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,7 +44,6 @@ class MenuViewModel @Inject constructor() : ViewModel()  {
         }
     }
 
-
     fun changeStatus(id: String, value: Boolean) {
         val newList = state.listTasks.map { task ->
             if (task.id == id) task.copy(status = value)
@@ -60,9 +61,39 @@ class MenuViewModel @Inject constructor() : ViewModel()  {
                 }
             }
         }
-
-
     }
 
+    fun changeTask(newTask: Tasks) {
+        viewModelScope.launch {
+            supabase.from("Tasks").update(
+                {
+                    set("name_task", newTask.nameTask)
+                    set("description", newTask.description)
+                    set("id_category", newTask.idCategory)
+                }
+            ) {
+                filter {
+                    eq("id", newTask.id)
+                }
+            }
+            val newList = state.listTasks.map { task ->
+                if (task.id == newTask.id) task.copy(nameTask = newTask.nameTask, description = newTask.description, idCategory = newTask.idCategory)
+                else task
+            }.toMutableList()
+            _state = _state.copy(listTasks = newList)
+        }
+    }
+
+    fun deleteTask(deletedTask: Tasks) {
+        viewModelScope.launch {
+            supabase.from("Tasks").delete {
+                filter {
+                    eq("id", deletedTask.id)
+                }
+            }
+            _state.listTasks.remove(deletedTask)
+            //ААААААААААААААААААААААААА
+        }
+    }
 
 }

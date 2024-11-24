@@ -43,61 +43,53 @@ fun StatisticsView(controller: NavHostController, viewModel: StatisticsViewModel
     }
     else
     {
-        Column(
-            modifier = Modifier.fillMaxSize()
-                .padding(horizontal = 24.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(modifier = Modifier.height(32.dp))
-            TextTittlePrimary("Колесо баланса", Modifier.fillMaxWidth().align(Alignment.CenterHorizontally))
-            Spacer(modifier = Modifier.height(32.dp))
-            Column (modifier = Modifier.fillMaxWidth()
-                .background(AppDesign.colors.lightBackground)
-                .padding(24.dp)){
-                Box (modifier = Modifier.size(200.dp)){
-                    CircleGradient()
-                    val count = state.listSpheres.count()
-                    val arc = (360 / count).toFloat()
-                    var start = 0f
-                    var r = 100
+        Column (Modifier.verticalScroll(rememberScrollState())){
+            Column(
+                modifier = Modifier.fillMaxSize().padding(horizontal = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                Spacer(modifier = Modifier.height(32.dp))
+                TextTittlePrimary("Колесо баланса", Modifier.fillMaxWidth().align(Alignment.CenterHorizontally))
+                Spacer(modifier = Modifier.height(32.dp))
+                Column (modifier = Modifier.fillMaxWidth()
+                    .background(AppDesign.colors.lightBackground)
+                    .padding(24.dp)){
+                    Box (modifier = Modifier.size(200.dp)){
+                        CircleGradient()
+                        val count = state.listSpheres.count()
+                        val arc = (360 / count).toFloat()
+                        var start = 0f
+                        var r = 100
 
-                    state.listSpheres.forEach { sphere ->
-                        var countAllGoals = 0f
-                        var countCompletedGoals = 0f
-                        var percent = 0f
-                        state.listGoals.forEach { goal ->
-                            if (goal.idSphere == sphere.id) {
-                                countAllGoals++
-                                if (goal.status)
-                                    countCompletedGoals++
+                        state.listSpheres.forEach { sphere ->
+                            var countAllGoals = 0f
+                            var countCompletedGoals = 0f
+                            var percent = 0f
+                            state.listGoals.forEach { goal ->
+                                if (goal.idSphere == sphere.id) {
+                                    countAllGoals++
+                                    if (goal.status)
+                                        countCompletedGoals++
+                                }
                             }
+                            if (countAllGoals != 0f)
+                                percent = countCompletedGoals / countAllGoals
+                            PartGradient(start, arc, percent)
+
+                            val angleDegrees = (start + arc / 2)
+                            val angleRadians = Math.toRadians(angleDegrees.toDouble())
+                            val textX = (r * cos(angleRadians)) * 3
+                            val textY = (r * sin(angleRadians)) * 3
+
+                            Column{
+                                Text(
+                                    text = sphere.name,
+                                    color = AppDesign.colors.textColor,
+                                    modifier = Modifier.align(Alignment.CenterHorizontally).offset { IntOffset(textX.toInt() + 280, textY.toInt() + 280)}
+                                )
+                            }
+
+                            start += arc
                         }
-                        if (countAllGoals != 0f)
-                            percent = countCompletedGoals / countAllGoals
-                        PartGradient(start, arc, percent)
-
-                        val angleDegrees = (start + arc / 2)
-                        val angleRadians = Math.toRadians(angleDegrees.toDouble())
-                        val textX = (r * cos(angleRadians)) * 3
-                        val textY = (r * sin(angleRadians)) * 3
-
-                        Column{
-                            Text(
-                                text = sphere.name,
-                                color = AppDesign.colors.textColor,
-                                modifier = Modifier.align(Alignment.CenterHorizontally).offset { IntOffset(textX.toInt() + 280, textY.toInt() + 280)}
-                            )
-                        }
-
-//                        val density = LocalDensity.current
-//                        Text(
-//                            text = sphere.name,
-//                            color = AppDesign.colors.textColor,
-//                            modifier = Modifier.offset {IntOffset(with(density) { textX }.toInt(), with(density) { textY }.toInt())},
-//                            textAlign = TextAlign.Center
-//                        )
-
-                        start += arc
                     }
                 }
             }

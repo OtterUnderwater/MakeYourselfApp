@@ -45,40 +45,38 @@ fun GoalsView(controller: NavHostController, viewModel: GoalsViewModel = hiltVie
         CircularProgressCenter()
     }
     else {
-        Column(
-            modifier = Modifier.padding(28.dp, 32.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            ButtonPrimary("Создать новую цель", true) { viewModel.createItem(controller) }
-            Spacer(modifier = Modifier.height(12.dp))
-            TextTittle("Не выполненые:")
-            Spacer(modifier = Modifier.height(12.dp))
-            if (state.notCompletedGoals != null) {
-                state.notCompletedGoals!!.forEach {
-                    Box(
-                        modifier = Modifier.fillMaxWidth()
-                            .background(AppDesign.colors.primary, RoundedCornerShape(16.dp))
-                            .clickable { viewModel.openItem(controller, it.id) }
-                    ) {
-                        TextBodyBold(it.name!!, Modifier.padding(16.dp))
+        Column (Modifier.verticalScroll(rememberScrollState())){
+            Column(
+                modifier = Modifier.padding(28.dp, 32.dp)
+            ) {
+                ButtonPrimary("Создать новую цель", true) { viewModel.createItem(controller) }
+                TextTittle("Не выполненые:", Modifier.padding(4.dp, 20.dp))
+                if (state.notCompletedGoals != null) {
+                    state.notCompletedGoals!!.forEach {
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                                .background(AppDesign.colors.primary, RoundedCornerShape(16.dp))
+                                .clickable { viewModel.openItem(controller, it.id) }
+                        ) {
+                            TextBodyBold(it.name!!, Modifier.padding(16.dp))
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
                     }
-                    Spacer(modifier = Modifier.height(12.dp))
-                }
-            } else TextTittle("Нет задач")
-            TextTittle("Завершенные:")
-            Spacer(modifier = Modifier.height(12.dp))
-            if (state.completedGoals != null) {
-                state.completedGoals!!.forEach {
-                    Box(
-                        modifier = Modifier.fillMaxWidth()
-                            .background(AppDesign.colors.lightBackground, RoundedCornerShape(16.dp))
-                            .clickable { viewModel.openItem(controller, it.id) }
-                    ) {
-                        TextBodyBold(it.name!!, Modifier.padding(16.dp))
+                } else TextTittle("Нет задач")
+                TextTittle("Завершенные:", Modifier.padding(4.dp, 20.dp))
+                if (state.completedGoals != null) {
+                    state.completedGoals!!.forEach {
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                                .background(AppDesign.colors.lightBackground, RoundedCornerShape(16.dp))
+                                .clickable { viewModel.openItem(controller, it.id) }
+                        ) {
+                            TextBodyBold(it.name!!, Modifier.padding(16.dp))
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
                     }
-                    Spacer(modifier = Modifier.height(12.dp))
-                }
-            } else TextTittle("Нет задач")
+                } else TextTittle("Нет задач")
+            }
         }
     }
 }
