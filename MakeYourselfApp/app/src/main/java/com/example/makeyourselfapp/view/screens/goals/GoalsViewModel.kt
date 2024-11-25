@@ -32,7 +32,7 @@ class GoalsViewModel @Inject constructor() : ViewModel() {
                     _state.completedGoals = list.filter { it.status == true}
                 }
             }
-            _state.loading = false
+            _state.loading.value = false
         }
     }
 
@@ -42,7 +42,11 @@ class GoalsViewModel @Inject constructor() : ViewModel() {
    }
 
    fun createItem(controller: NavHostController){
-        controller.navigate(RoutesNavigation.ITEM_GOAL)
+        controller.navigate(RoutesNavigation.ITEM_GOAL) {
+            popUpTo(RoutesNavigation.GOALS) {
+                inclusive = true
+            }
+        }
    }
 
 }

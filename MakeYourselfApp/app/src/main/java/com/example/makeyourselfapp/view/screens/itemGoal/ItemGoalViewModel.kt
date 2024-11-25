@@ -38,7 +38,7 @@ class ItemGoalViewModel @Inject constructor() : ViewModel() {
             _state.listSpheres = supabase.from("Spheres").select()
             { filter { eq("id_user", currentUser!!) } }.decodeList<Spheres>()
             _state.listCategories = supabase.from("Categories").select().decodeList<Categories>()
-            _state.loading = false
+            _state.loading.value = false
         }
     }
 

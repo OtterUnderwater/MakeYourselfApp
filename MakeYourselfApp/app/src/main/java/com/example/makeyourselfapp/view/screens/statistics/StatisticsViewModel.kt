@@ -29,7 +29,7 @@ class StatisticsViewModel @Inject constructor() : ViewModel() {
             _state.listGoals = supabase.from("Goals").select() {
                 filter { eq("id_user", currentUser!!) }
             }.decodeList<Goals>()
-            _state.loading = false
+            _state.loading.value = false
         }
     }
 

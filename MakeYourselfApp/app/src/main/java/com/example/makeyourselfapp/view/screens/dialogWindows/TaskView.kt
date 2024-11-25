@@ -91,8 +91,8 @@ fun TaskShow(task: Tasks,
             horizontalArrangement = Arrangement.Center){
             TextBodyMedium(categories.first { it.id == task.idCategory }.category, Modifier.padding(16.dp))
         }
-        Spacer(modifier = Modifier.height(12.dp))
-        Row (modifier = Modifier.fillMaxWidth()){
+        
+        Row (modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)){
             Box(modifier = Modifier.weight(0.5f)){
                 ButtonColorIcon(R.drawable.icon_edit, AppDesign.colors.primary){
                     isVisibleEdit()
@@ -133,7 +133,7 @@ fun TaskEdit(task: Tasks,
         }
         Spacer(modifier = Modifier.height(20.dp))
         TextBodyMedium("Описание:", Modifier.padding(top = 4.dp))
-        TextFieldBig(newTask.description!!, "Описание") {
+        TextFieldBig(newTask.description ?: "", "Описание") {
             newTask = newTask.copy(description = it)
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -160,6 +160,7 @@ fun TaskEdit(task: Tasks,
                         onClick = {
                             selectedOption = it
                             newTask = newTask.copy(idCategory = selectedOption.id)
+                            expanded = false
                         },
                         colors = MenuDefaults.itemColors(textColor = AppDesign.colors.textColor),
                         text = { Text(it.category ) }

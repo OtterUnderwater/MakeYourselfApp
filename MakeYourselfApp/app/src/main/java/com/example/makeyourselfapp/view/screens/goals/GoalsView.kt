@@ -41,7 +41,7 @@ fun GoalsView(controller: NavHostController, viewModel: GoalsViewModel = hiltVie
         viewModel.launch()
     }
 
-    if (state.loading) {
+    if (state.loading.value) {
         CircularProgressCenter()
     }
     else {

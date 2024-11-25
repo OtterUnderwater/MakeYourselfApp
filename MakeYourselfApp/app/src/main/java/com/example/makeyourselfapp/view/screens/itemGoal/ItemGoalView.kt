@@ -49,7 +49,7 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
     var state = viewModel.state
     LaunchedEffect(Unit) { viewModel.launch() }
     Spacer(modifier = Modifier.height(24.dp))
-    if (state.loading) {
+    if (state.loading.value) {
         CircularProgressCenter()
     } else {
         Box(
@@ -89,6 +89,7 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                                         onClick = {
                                             selectedOption = it
                                             viewModel.setGoals(state.goal.copy(idSphere = it.id))
+                                            expanded = false
                                         },
                                         colors = MenuDefaults.itemColors(textColor = AppDesign.colors.textColor),
                                         text = { Text(it.name ) }

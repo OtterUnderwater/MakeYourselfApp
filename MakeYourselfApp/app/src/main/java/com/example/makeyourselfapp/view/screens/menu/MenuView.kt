@@ -42,7 +42,7 @@ fun MenuView(controller: NavHostController, viewModel: MenuViewModel = hiltViewM
         viewModel.launch()
     }
 
-    if (state.loading) {
+    if (state.loading.value) {
         CircularProgressCenter()
     } else {
         Column (modifier = Modifier.verticalScroll(rememberScrollState())){

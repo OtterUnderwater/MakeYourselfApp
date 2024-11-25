@@ -35,9 +35,7 @@ fun RegView (controller: NavController, viewModel: RegViewModel = hiltViewModel(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center) {
         Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-            Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
-                TextTittlePrimary("Регистрация")
-            }
+            TextTittlePrimary("Регистрация")
             Spacer(modifier = Modifier.height(28.dp))
             TextFieldBase(viewModel.user.name, "Имя")
             { viewModel.setUser(viewModel.user.copy(name = it))}

@@ -92,6 +92,7 @@ fun AddTaskView(categories: List<Categories>, viewModel: ItemGoalViewModel, swit
                                 onClick = {
                                     selectedOption = it
                                     task = task.copy(idCategory = selectedOption.id)
+                                    expanded = false
                                 },
                                 colors = MenuDefaults.itemColors(textColor = AppDesign.colors.textColor),
                                 text = { Text(it.category ) }

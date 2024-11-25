@@ -36,9 +36,7 @@ fun AuthView(controller: NavController, viewModel: AuthViewModel = hiltViewModel
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center) {
         Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-            Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
-                TextTittlePrimary("Авторизация")
-            }
+            TextTittlePrimary("Авторизация")
             Spacer(modifier = Modifier.height(30.dp))
             TextFieldBase(viewModel.user.login,"Логин")
             { viewModel.setUser(viewModel.user.copy(login = it))}

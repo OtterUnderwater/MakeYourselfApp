@@ -37,7 +37,7 @@ class MenuViewModel @Inject constructor() : ViewModel()  {
                     }
                 }
             }
-            _state.loading = false
+            _state.loading.value = false
         }
     }
 
@@ -83,13 +83,14 @@ class MenuViewModel @Inject constructor() : ViewModel()  {
 
     fun deleteTask(deletedTask: Tasks) {
         viewModelScope.launch {
+            _state.loading.value = true
             supabase.from("Tasks").delete {
                 filter {
                     eq("id", deletedTask.id)
                 }
             }
             _state.listTasks.remove(deletedTask)
-            //ААААААААААААААААААААААААА
+            _state.loading.value = false
         }
     }
 
