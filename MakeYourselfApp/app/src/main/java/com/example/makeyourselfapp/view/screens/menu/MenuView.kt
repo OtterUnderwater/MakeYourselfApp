@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.makeyourselfapp.models.screens.VMForTask
 import com.example.makeyourselfapp.view.components.CheckBoxMenu
 import com.example.makeyourselfapp.view.components.CircularProgressCenter
 import com.example.makeyourselfapp.view.components.TextBodyBold
@@ -97,7 +98,7 @@ fun MenuView(controller: NavHostController, viewModel: MenuViewModel = hiltViewM
             }
         }
         if (showDialog) {
-            TaskView(state.listTasks[idTask], state.listCategories, viewModel){
+            TaskView(state.listTasks[idTask], state.listCategories, VMForTask(menuVM = viewModel)){
                 showDialog = false
             }
         }

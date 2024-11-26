@@ -65,4 +65,39 @@ class ItemGoalViewModel @Inject constructor() : ViewModel() {
             }
         }
     }
+
+    fun deleteTask(deletedTask: Tasks) {
+        viewModelScope.launch {
+            _state.loading.value = true
+            supabase.from("Tasks").delete {
+                filter {
+                    eq("id", deletedTask.id)
+                }
+            }
+            _state.listTasks.remove(deletedTask)
+            _state.loading.value = false
+        }
+    }
+
+    fun changeTask(newTask: Tasks) {
+        viewModelScope.launch {
+            supabase.from("Tasks").update(
+                {
+                    set("name_task", newTask.nameTask)
+                    set("description", newTask.description)
+                    set("id_category", newTask.idCategory)
+                }
+            ) {
+                filter {
+                    eq("id", newTask.id)
+                }
+            }
+            val newList = state.listTasks.map { task ->
+                if (task.id == newTask.id) task.copy(nameTask = newTask.nameTask, description = newTask.description, idCategory = newTask.idCategory)
+                else task
+            }.toMutableList()
+            _state = _state.copy(listTasks = newList)
+        }
+    }
+
 }

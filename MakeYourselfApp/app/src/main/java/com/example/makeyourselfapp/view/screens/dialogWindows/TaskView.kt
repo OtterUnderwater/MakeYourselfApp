@@ -36,18 +36,18 @@ import androidx.compose.ui.window.Dialog
 import com.example.makeyourselfapp.R
 import com.example.makeyourselfapp.models.database.Categories
 import com.example.makeyourselfapp.models.database.Tasks
+import com.example.makeyourselfapp.models.screens.VMForTask
 import com.example.makeyourselfapp.view.components.ButtonColorIcon
 import com.example.makeyourselfapp.view.components.ButtonPrimary
 import com.example.makeyourselfapp.view.components.TextBodyMedium
 import com.example.makeyourselfapp.view.components.TextFieldBig
 import com.example.makeyourselfapp.view.components.TextFieldSmall
 import com.example.makeyourselfapp.view.components.TextTittle
-import com.example.makeyourselfapp.view.screens.menu.MenuViewModel
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
 
 @Composable
-fun TaskView(task: Tasks, categories: List<Categories>, viewModel: MenuViewModel, switchDialog: () -> Unit) {
+fun TaskView(task: Tasks, categories: List<Categories>, vm: VMForTask, switchDialog: () -> Unit) {
     val listColor = listOf(
         AppDesign.colors.accent, AppDesign.colors.tertiary,
         AppDesign.colors.secondary, AppDesign.colors.primary)
@@ -59,10 +59,10 @@ fun TaskView(task: Tasks, categories: List<Categories>, viewModel: MenuViewModel
             colors = CardDefaults.cardColors(containerColor = AppDesign.colors.lightBackground),
         ) {
             if (isVisibleShow) {
-                TaskShow(task, listColor, categories, viewModel, switchDialog) { isVisibleShow = false }
+                TaskShow(task, listColor, categories, vm, switchDialog) { isVisibleShow = false }
             }
             else{
-                TaskEdit(task, listColor, categories, viewModel) { isVisibleShow = true }
+                TaskEdit(task, listColor, categories, vm) { isVisibleShow = true }
             }
         }
     }
@@ -72,7 +72,7 @@ fun TaskView(task: Tasks, categories: List<Categories>, viewModel: MenuViewModel
 fun TaskShow(task: Tasks,
              listColor: List<Color>,
              categories: List<Categories>,
-             viewModel: MenuViewModel,
+             vm: VMForTask,
              switchDialog: () -> Unit,
              isVisibleEdit: () -> Unit) {
     Column (modifier = Modifier
@@ -92,7 +92,9 @@ fun TaskShow(task: Tasks,
             TextBodyMedium(categories.first { it.id == task.idCategory }.category, Modifier.padding(16.dp))
         }
         
-        Row (modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)){
+        Row (modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp)){
             Box(modifier = Modifier.weight(0.5f)){
                 ButtonColorIcon(R.drawable.icon_edit, AppDesign.colors.primary){
                     isVisibleEdit()
@@ -101,7 +103,15 @@ fun TaskShow(task: Tasks,
             Spacer(modifier = Modifier.width(8.dp))
             Box(modifier = Modifier.weight(0.5f)){
                 ButtonColorIcon(R.drawable.icon_delete, AppDesign.colors.accent){
-                    viewModel.deleteTask(task)
+                    if (vm.menuVM != null) {
+                        vm.menuVM!!.deleteTask(task)
+                    }
+                    else if (vm.itemGoalVM != null) {
+                        vm.itemGoalVM!!.deleteTask(task)
+                    }
+                    else if (vm.infoGoalVM != null) {
+                        vm.infoGoalVM!!.deleteTask(task)
+                    }
                     switchDialog()
                 }
             }
@@ -113,7 +123,7 @@ fun TaskShow(task: Tasks,
 fun TaskEdit(task: Tasks,
              listColor: List<Color>,
              categories: List<Categories>,
-             viewModel: MenuViewModel,
+             vm: VMForTask,
              isVisibleEdit: () -> Unit) {
     val providerDensity = LocalDensity.current
     var dropdownWidth by remember {  mutableStateOf(0.dp) }
@@ -170,7 +180,15 @@ fun TaskEdit(task: Tasks,
         }
         Spacer(modifier = Modifier.height(20.dp))
         ButtonPrimary("Сохранить",newTask.nameTask != "" ){
-            viewModel.changeTask(newTask)
+            if (vm.menuVM != null) {
+                vm.menuVM!!.changeTask(newTask)
+            }
+            else if (vm.itemGoalVM != null) {
+                vm.itemGoalVM!!.changeTask(newTask)
+            }
+            else if (vm.infoGoalVM != null) {
+                vm.infoGoalVM!!.changeTask(newTask)
+            }
             isVisibleEdit()
         }
     }

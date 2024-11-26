@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
 import com.example.makeyourselfapp.models.database.Spheres
+import com.example.makeyourselfapp.models.screens.VMForTask
 import com.example.makeyourselfapp.view.components.ButtonPrimary
 import com.example.makeyourselfapp.view.components.CheckBoxMenu
 import com.example.makeyourselfapp.view.components.CircularProgressCenter
@@ -39,6 +40,7 @@ import com.example.makeyourselfapp.view.components.TextBodyMedium
 import com.example.makeyourselfapp.view.components.TextFieldBig
 import com.example.makeyourselfapp.view.components.TextFieldSmall
 import com.example.makeyourselfapp.view.screens.dialogWindows.AddTaskView
+import com.example.makeyourselfapp.view.screens.dialogWindows.TaskView
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
 @Composable
@@ -103,11 +105,13 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                     showDialog = true
                 }
                 if (showDialog) {
-                    AddTaskView(state.listCategories, viewModel){
+                    AddTaskView(state.listCategories, VMForTask(itemGoalVM = viewModel)){
                         showDialog = false
                     }
                 }
-                state.listTasks.forEach { task ->
+                var showTaskDialog by remember { mutableStateOf(false) }
+                var idTask by remember { mutableStateOf(0) }
+                state.listTasks.forEachIndexed { index, task ->
                         Spacer(modifier = Modifier.height(12.dp))
                         Row(
                             modifier = Modifier.fillMaxWidth()
@@ -119,7 +123,10 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                             CheckBoxMenu(task.status, AppDesign.colors.primary) {
                                 viewModel.changeStatus(task.id, it)
                             }
-                            TextBodyMedium(task.nameTask!!, Modifier.align(Alignment.CenterVertically))
+                            TextBodyMedium(task.nameTask!!, Modifier.align(Alignment.CenterVertically).clickable {
+                                showTaskDialog = true
+                                idTask = index
+                            })
                         }
                 }
                 Spacer(modifier = Modifier.height(24.dp))
@@ -128,6 +135,11 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                     viewModel.createGoal(controller)
                 }
                 Spacer(modifier = Modifier.height(24.dp))
+                if (showTaskDialog) {
+                    TaskView(state.listTasks[idTask], state.listCategories, VMForTask(itemGoalVM = viewModel)){
+                        showTaskDialog = false
+                    }
+                }
             }
         }
     }

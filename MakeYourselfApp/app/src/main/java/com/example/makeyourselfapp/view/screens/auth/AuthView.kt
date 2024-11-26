@@ -35,7 +35,8 @@ fun AuthView(controller: NavController, viewModel: AuthViewModel = hiltViewModel
         modifier = Modifier.fillMaxSize().background(AppDesign.colors.background)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center) {
-        Column(modifier = Modifier.padding(horizontal = 24.dp)) {
+        Column(modifier = Modifier.padding(horizontal = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally) {
             TextTittlePrimary("Авторизация")
             Spacer(modifier = Modifier.height(30.dp))
             TextFieldBase(viewModel.user.login,"Логин")

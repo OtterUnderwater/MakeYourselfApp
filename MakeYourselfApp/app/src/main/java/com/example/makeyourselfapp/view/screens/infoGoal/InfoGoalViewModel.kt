@@ -1,5 +1,8 @@
 package com.example.makeyourselfapp.view.screens.infoGoal
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -13,50 +16,56 @@ import com.example.makeyourselfapp.models.database.Tasks
 import com.example.makeyourselfapp.models.screens.StateInfoGoal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.postgrest.from
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class InfoGoalViewModel @Inject constructor() : ViewModel() {
-    private var _state = MutableStateFlow(StateInfoGoal())
-    val state: StateFlow<StateInfoGoal> = _state.asStateFlow()
+    private var _state by mutableStateOf(StateInfoGoal())
+    val state: StateInfoGoal get() = _state
 
-    fun setState(value: StateInfoGoal){
-        _state.value = value
+    fun setGoals(newGoals: Goals) {
+        _state = _state.copy(goal = newGoals)
     }
 
-    var stateValue: StateInfoGoal
-        get() = _state.value
-        set(value) {
-            _state.value = value
+    fun addTasks(newTasks: Tasks) {
+        viewModelScope.launch {
+            supabase.from("Tasks").insert(newTasks.copy(idGoal = state.goal.id))
         }
+        _state.listTasks.add(newTasks)
+    }
 
     fun launch(){
         viewModelScope.launch {
-            stateValue.listSpheres = supabase.from("Spheres").select()
+            _state.listSpheres = supabase.from("Spheres").select()
             { filter { eq("id_user", currentUser!!) } }.decodeList<Spheres>()
-            stateValue.listTasks = supabase.from("Tasks").select()
-            { filter { eq("id_goal", state.value.goal.id) } }.decodeList<Tasks>().toMutableList()
-            stateValue.listCategories = supabase.from("Categories").select().decodeList<Categories>()
-            stateValue.loading = false
+            _state.listTasks = supabase.from("Tasks").select()
+            { filter { eq("id_goal", state.goal.id) } }.decodeList<Tasks>().toMutableList()
+            _state.listCategories = supabase.from("Categories").select().decodeList<Categories>()
+            _state.loading.value = false
         }
     }
 
-    fun changeStatusGoal(value: Boolean){
+    fun goToGoals(controller: NavHostController) {
+        controller.navigate(RoutesNavigation.GOALS) {
+            popUpTo(RoutesNavigation.INFO_GOAL) {
+                inclusive = true
+            }
+        }
+    }
+
+    fun changeStatusGoal(goal: Goals){
         viewModelScope.launch {
             supabase.from("Goals").update( {
-                set("status", value)
+                set("status", goal.status)
             }
             ) {
                 filter {
-                    eq("id", stateValue.goal.id)
+                    eq("id", goal.id)
                 }
             }
         }
-        stateValue = stateValue.copy(goal = stateValue.goal.copy(status = value))
+        _state = _state.copy(goal = goal)
     }
 
     fun changeStatusTask(id: String, value: Boolean) {
@@ -70,36 +79,36 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
                 }
             }
         }
-        val newList = stateValue.listTasks.map { task ->
+        val newList = state.listTasks.map { task ->
             if (task.id == id) task.copy(status = value)
             else task
         }.toMutableList()
-        stateValue = stateValue.copy(listTasks = newList)
+        _state = state.copy(listTasks = newList)
     }
 
-/*    fun changeGoal(newTask: Tasks) {
+    fun changeGoal(newGoal: Goals) {
         viewModelScope.launch {
             supabase.from("Goals").update(
                 {
-                    set("name", _state.value.goal.name)
-                    set("description", _state.value.goal.description)
-                    set("id_sphere", _state.value.goal.idSphere)
-                    set("status", _state.value.goal.status)
+                    set("name", newGoal.name)
+                    set("description", newGoal.description)
+                    set("id_sphere", newGoal.idSphere)
+                    set("status", newGoal.status)
                 }
             ) {
                 filter {
-                    eq("id", _state.value.goal.id)
+                    eq("id", newGoal.id)
                 }
             }
         }
-
-    }*/
+        _state = _state.copy(goal = newGoal)
+    }
 
     fun deleteGoal(controller: NavHostController) {
         viewModelScope.launch {
             supabase.from("Goals").delete {
                 filter {
-                    eq("id", _state.value.goal.id)
+                    eq("id", _state.goal.id)
                 }
             }
         }
@@ -107,6 +116,40 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
             popUpTo(RoutesNavigation.ITEM_GOAL) {
                 inclusive = true
             }
+        }
+    }
+
+    fun changeTask(newTask: Tasks) {
+        viewModelScope.launch {
+            supabase.from("Tasks").update(
+                {
+                    set("name_task", newTask.nameTask)
+                    set("description", newTask.description)
+                    set("id_category", newTask.idCategory)
+                }
+            ) {
+                filter {
+                    eq("id", newTask.id)
+                }
+            }
+            val newList = state.listTasks.map { task ->
+                if (task.id == newTask.id) task.copy(nameTask = newTask.nameTask, description = newTask.description, idCategory = newTask.idCategory)
+                else task
+            }.toMutableList()
+            _state = _state.copy(listTasks = newList)
+        }
+    }
+
+    fun deleteTask(deletedTask: Tasks) {
+        viewModelScope.launch {
+            _state.loading.value = true
+            supabase.from("Tasks").delete {
+                filter {
+                    eq("id", deletedTask.id)
+                }
+            }
+            _state.listTasks.remove(deletedTask)
+            _state.loading.value = false
         }
     }
 

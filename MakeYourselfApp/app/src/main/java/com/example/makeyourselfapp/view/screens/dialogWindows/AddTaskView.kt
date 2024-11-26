@@ -34,19 +34,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.makeyourselfapp.models.database.Categories
 import com.example.makeyourselfapp.models.database.Tasks
+import com.example.makeyourselfapp.models.screens.VMForTask
 import com.example.makeyourselfapp.view.components.ButtonPrimary
 import com.example.makeyourselfapp.view.components.TextBodyMedium
 import com.example.makeyourselfapp.view.components.TextFieldBig
 import com.example.makeyourselfapp.view.components.TextFieldSmall
 import com.example.makeyourselfapp.view.components.TextTittle
-import com.example.makeyourselfapp.view.screens.itemGoal.ItemGoalViewModel
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 import java.util.UUID
 
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun AddTaskView(categories: List<Categories>, viewModel: ItemGoalViewModel, switchDialog: () -> Unit) {
+fun AddTaskView(categories: List<Categories>, vm: VMForTask, switchDialog: () -> Unit) {
     val providerDensity = LocalDensity.current
     var dropdownWidth by remember {  mutableStateOf(0.dp) }
     val listColor = listOf(
@@ -106,7 +106,12 @@ fun AddTaskView(categories: List<Categories>, viewModel: ItemGoalViewModel, swit
                 TextFieldBig(task.description!!, "Описание") { task = task.copy(description = it) }
                 Spacer(modifier = Modifier.height(20.dp))
                 ButtonPrimary("Добавить",task.nameTask != "") {
-                    viewModel.addTasks(task)
+                    if(vm.itemGoalVM != null){
+                        vm.itemGoalVM!!.addTasks(task)
+                    }
+                    else if (vm.infoGoalVM != null) {
+                        vm.infoGoalVM!!.addTasks(task)
+                    }
                     switchDialog()
                 }
             }
