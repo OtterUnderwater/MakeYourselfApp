@@ -41,7 +41,7 @@ fun RegView (controller: NavController, viewModel: RegViewModel = hiltViewModel(
             TextFieldBase(viewModel.user.name, "Имя")
             { viewModel.setUser(viewModel.user.copy(name = it))}
             Spacer(modifier = Modifier.height(28.dp))
-            TextFieldBase(viewModel.user.login, "Логин" )
+            TextFieldBase(viewModel.user.login, "Почта" )
             { viewModel.setUser(viewModel.user.copy(login = it))}
             Spacer(modifier = Modifier.height(28.dp))
             TextFieldBase(viewModel.user.password, "Пароль")

@@ -34,7 +34,11 @@ class RegViewModel @Inject constructor() : ViewModel() {
     }
 
     fun goAuth(controller: NavController) {
-        controller.navigate(RoutesNavigation.AUTH)
+        controller.navigate(RoutesNavigation.AUTH) {
+            popUpTo(RoutesNavigation.REG) {
+                inclusive = true
+            }
+        }
     }
 
     fun signUp(controller: NavController) {

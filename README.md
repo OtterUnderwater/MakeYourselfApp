@@ -14,6 +14,7 @@ If you have any difficulties or questions, create discussion in this repository.
 | layout   | adding a new layout without functionality            |
 | style    | working with styles and design                       |
 | fix      | error correction                                     |
+| release  | release of ready-made versions of applications       |
 | perf     | changes to improve the program                       |
 | refactor | code edits without changing errors or functionality  |
 | revert   | rollback to previous versions                        |

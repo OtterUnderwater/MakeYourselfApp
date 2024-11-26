@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
+import com.example.makeyourselfapp.models.database.Goals
 import com.example.makeyourselfapp.models.database.Spheres
 import com.example.makeyourselfapp.models.screens.VMForTask
 import com.example.makeyourselfapp.view.components.ButtonPrimary
@@ -48,7 +49,8 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
 {
     val providerDensity = LocalDensity.current //провейдер плотности пикселей
     var dropdownWidth by remember {  mutableStateOf(0.dp) } //размер выпадающего списка под контекст
-    var state = viewModel.state
+    val state = viewModel.state
+    var newGoal by remember { mutableStateOf(Goals()) }
     LaunchedEffect(Unit) { viewModel.launch() }
     Spacer(modifier = Modifier.height(24.dp))
     if (state.loading.value) {
@@ -62,23 +64,25 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                 .background(AppDesign.colors.lightBackground, RoundedCornerShape(16.dp)))
             {
                 Spacer(modifier = Modifier.height(20.dp))
-                TextFieldSmall(state.goal.name!!,"Наименование цели")
-                { viewModel.setGoals(state.goal.copy(name = it)) }
+                TextFieldSmall(newGoal.name!!,"Наименование цели") {
+                    newGoal = newGoal.copy(name = it)
+                }
                 Spacer(modifier = Modifier.height(20.dp))
                 Divider( thickness = 2.dp, color = AppDesign.colors.additional)
                 Spacer(modifier = Modifier.height(20.dp))
-                TextFieldBig(state.goal.description!!,"Описание")
-                { viewModel.setGoals(state.goal.copy(description = it)) }
+                TextFieldBig(newGoal.description!!,"Описание") {
+                    newGoal = newGoal.copy(description = it)
+                }
                 Spacer(modifier = Modifier.height(20.dp))
                 var expanded by remember { mutableStateOf(false) }
-                state.goal = state.goal.copy(idSphere = state.listSpheres.first().id)
-                var selectedOption by remember { mutableStateOf<Spheres?>(state.listSpheres.firstOrNull()) }
+                newGoal = newGoal.copy(idSphere = state.listSpheres.first().id)
+                var selectedOption by remember { mutableStateOf(state.listSpheres.first()) }
                 Box {
                     Row (modifier = Modifier.fillMaxWidth()
                         .onGloballyPositioned { dropdownWidth = with(providerDensity) { it.size.width.toDp() } }
                         .border(2.dp, AppDesign.colors.primary, RoundedCornerShape(16.dp))
                         .clickable { expanded = true }){
-                        TextBodyMedium("Сфера: ${selectedOption?.name ?: "Нет сферы"}", Modifier.padding(16.dp))
+                        TextBodyMedium("Сфера: ${selectedOption.name}", Modifier.padding(16.dp))
                     }
                     DropdownMenu(
                         expanded = expanded,
@@ -86,11 +90,10 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                             .background(AppDesign.colors.lightBackground),
                                 onDismissRequest = { expanded = false },
                             ) {
-                                state.listSpheres.forEach { it ->
+                                state.listSpheres.forEach {
                                     DropdownMenuItem(
                                         onClick = {
                                             selectedOption = it
-                                            viewModel.setGoals(state.goal.copy(idSphere = it.id))
                                             expanded = false
                                         },
                                         colors = MenuDefaults.itemColors(textColor = AppDesign.colors.textColor),
@@ -130,9 +133,9 @@ fun ItemGoalView(controller: NavHostController, viewModel: ItemGoalViewModel = h
                         }
                 }
                 Spacer(modifier = Modifier.height(24.dp))
-                ButtonPrimary("Создать цель", state.goal.name != "") {
-                    state.goal.idUser = currentUser!!
-                    viewModel.createGoal(controller)
+                ButtonPrimary("Создать цель", newGoal.name != "") {
+                    newGoal = newGoal.copy(idUser = currentUser!!, idSphere = selectedOption.id)
+                    viewModel.createGoal(controller, newGoal)
                 }
                 Spacer(modifier = Modifier.height(24.dp))
                 if (showTaskDialog) {

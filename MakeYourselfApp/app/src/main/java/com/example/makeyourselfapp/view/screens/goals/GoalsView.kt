@@ -51,8 +51,8 @@ fun GoalsView(controller: NavHostController, viewModel: GoalsViewModel = hiltVie
             ) {
                 ButtonPrimary("Создать новую цель", true) { viewModel.createItem(controller) }
                 TextTittle("Не выполненые:", Modifier.padding(4.dp, 20.dp))
-                if (state.notCompletedGoals != null) {
-                    state.notCompletedGoals!!.forEach {
+                if (state.notCompletedGoals.isNotEmpty()) {
+                    state.notCompletedGoals.forEach {
                         Box(
                             modifier = Modifier.fillMaxWidth()
                                 .background(AppDesign.colors.primary, RoundedCornerShape(16.dp))
@@ -62,10 +62,10 @@ fun GoalsView(controller: NavHostController, viewModel: GoalsViewModel = hiltVie
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                     }
-                } else TextTittle("Нет задач")
+                } else TextBodyMedium("Нет задач", Modifier.padding(start = 4.dp, bottom = 20.dp))
                 TextTittle("Завершенные:", Modifier.padding(4.dp, 8.dp, 4.dp, 20.dp))
-                if (state.completedGoals != null) {
-                    state.completedGoals!!.forEach {
+                if (state.completedGoals.isNotEmpty()) {
+                    state.completedGoals.forEach {
                         Box(
                             modifier = Modifier.fillMaxWidth()
                                 .background(AppDesign.colors.lightBackground, RoundedCornerShape(16.dp))
@@ -75,7 +75,7 @@ fun GoalsView(controller: NavHostController, viewModel: GoalsViewModel = hiltVie
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                     }
-                } else TextTittle("Нет задач")
+                } else TextBodyMedium("Нет задач", Modifier.padding(start = 4.dp))
             }
         }
     }

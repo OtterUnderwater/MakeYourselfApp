@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
+import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
 import com.example.makeyourselfapp.view.components.AnswerClickable
 import com.example.makeyourselfapp.view.components.TextTittle
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
@@ -36,9 +37,9 @@ fun YesOrNo(controller: NavHostController, switchDialog: () -> Unit) {
                     horizontalArrangement = Arrangement.Center) {
                     Column (modifier = Modifier.weight(0.5f)) {
                         AnswerClickable("Да") {
-                            controller.navigate(RoutesNavigation.SPLASH)
-                            //currentUser = null
+                            currentUser = null
                             switchDialog()
+                            controller.navigate(RoutesNavigation.SPLASH)
                         }
                     }
                     Column (modifier = Modifier.weight(0.5f)) {

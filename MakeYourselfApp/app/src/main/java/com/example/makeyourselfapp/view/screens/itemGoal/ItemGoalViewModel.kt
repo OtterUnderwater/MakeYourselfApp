@@ -21,13 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemGoalViewModel @Inject constructor() : ViewModel() {
-
     private var _state by mutableStateOf(StateItemGoal())
     val state: StateItemGoal get() = _state
-
-    fun setGoals(newGoals: Goals) {
-        _state = _state.copy(goal = newGoals)
-    }
 
     fun addTasks(newTasks: Tasks) {
         _state.listTasks.add(newTasks)
@@ -50,9 +45,10 @@ class ItemGoalViewModel @Inject constructor() : ViewModel() {
         _state = _state.copy(listTasks = newList)
     }
 
-    fun createGoal(controller: NavHostController){
+    fun createGoal(controller: NavHostController, newGoal: Goals){
+        _state = state.copy(goal = newGoal)
         viewModelScope.launch {
-            val goal = supabase.from("Goals").insert(_state.goal) {
+            val goal = supabase.from("Goals").insert(newGoal) {
                 select()
             }.decodeSingle<Goals>()
             _state.listTasks.forEach {

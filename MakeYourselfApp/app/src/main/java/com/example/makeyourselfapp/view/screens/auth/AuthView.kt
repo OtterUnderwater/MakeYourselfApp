@@ -13,12 +13,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.makeyourselfapp.models.database.Goals
+import com.example.makeyourselfapp.models.database.Users
 import com.example.makeyourselfapp.view.components.ButtonPrimary
 import com.example.makeyourselfapp.view.components.TextClickable
 import com.example.makeyourselfapp.view.components.TextFieldBase
@@ -39,7 +45,7 @@ fun AuthView(controller: NavController, viewModel: AuthViewModel = hiltViewModel
             horizontalAlignment = Alignment.CenterHorizontally) {
             TextTittlePrimary("Авторизация")
             Spacer(modifier = Modifier.height(30.dp))
-            TextFieldBase(viewModel.user.login,"Логин")
+            TextFieldBase(viewModel.user.login,"Почта")
             { viewModel.setUser(viewModel.user.copy(login = it))}
             Spacer(modifier = Modifier.height(30.dp))
             TextFieldPassword(viewModel.user.password,"Пароль")
