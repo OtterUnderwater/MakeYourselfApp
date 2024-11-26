@@ -20,6 +20,7 @@ import com.example.makeyourselfapp.view.components.AnswerClickable
 import com.example.makeyourselfapp.view.components.TextTittle
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
+//Диалоговое окно подтверждения
 @Composable
 fun YesOrNo(controller: NavHostController, switchDialog: () -> Unit) {
     Dialog(onDismissRequest = { switchDialog()} ) {

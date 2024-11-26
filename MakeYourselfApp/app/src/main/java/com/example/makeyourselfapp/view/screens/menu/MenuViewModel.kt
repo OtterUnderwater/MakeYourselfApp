@@ -16,6 +16,7 @@ import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+//Данный класс выполняет различные запросы с БД, редактирование и переход по страницам
 @HiltViewModel
 class MenuViewModel @Inject constructor() : ViewModel()  {
     private var _state by mutableStateOf(StateMenu())
@@ -41,13 +42,13 @@ class MenuViewModel @Inject constructor() : ViewModel()  {
         }
     }
 
+    //смена статуса
     fun changeStatus(id: String, value: Boolean) {
         val newList = state.listTasks.map { task ->
             if (task.id == id) task.copy(status = value)
             else task
         }.toMutableList()
         _state = _state.copy(listTasks = newList)
-
         viewModelScope.launch {
             supabase.from("Tasks").update( {
                 set("status", value)
@@ -60,6 +61,7 @@ class MenuViewModel @Inject constructor() : ViewModel()  {
         }
     }
 
+    //изменение задачи и обновление данных в бд
     fun changeTask(newTask: Tasks) {
         viewModelScope.launch {
             supabase.from("Tasks").update(
@@ -81,6 +83,7 @@ class MenuViewModel @Inject constructor() : ViewModel()  {
         }
     }
 
+    //удаление задачи из бд
     fun deleteTask(deletedTask: Tasks) {
         viewModelScope.launch {
             _state.loading.value = true
@@ -93,5 +96,4 @@ class MenuViewModel @Inject constructor() : ViewModel()  {
             _state.loading.value = false
         }
     }
-
 }

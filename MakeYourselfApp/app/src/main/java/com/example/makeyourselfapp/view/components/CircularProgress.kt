@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
+/* Метод для Circular*/
 @Composable
 fun  CircularProgressCenter(){
     Column(modifier = Modifier.fillMaxSize(),

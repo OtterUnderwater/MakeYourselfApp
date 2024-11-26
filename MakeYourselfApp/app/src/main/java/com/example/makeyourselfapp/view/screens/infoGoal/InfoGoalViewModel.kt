@@ -19,21 +19,11 @@ import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+//Данный класс выполняет различные запросы с БД, редактирование и переход по страницам
 @HiltViewModel
 class InfoGoalViewModel @Inject constructor() : ViewModel() {
     private var _state by mutableStateOf(StateInfoGoal())
     val state: StateInfoGoal get() = _state
-
-    fun setGoals(newGoals: Goals) {
-        _state = _state.copy(goal = newGoals)
-    }
-
-    fun addTasks(newTasks: Tasks) {
-        viewModelScope.launch {
-            supabase.from("Tasks").insert(newTasks.copy(idGoal = state.goal.id))
-        }
-        _state.listTasks.add(newTasks)
-    }
 
     fun launch(){
         viewModelScope.launch {
@@ -46,6 +36,20 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    //изменение состояния
+    fun setGoals(newGoals: Goals) {
+        _state = _state.copy(goal = newGoals)
+    }
+
+    //добавление задачи в лист
+    fun addTasks(newTasks: Tasks) {
+        viewModelScope.launch {
+            supabase.from("Tasks").insert(newTasks.copy(idGoal = state.goal.id))
+        }
+        _state.listTasks.add(newTasks)
+    }
+
+    //возвращение на основную страницу списка всех целей
     fun goToGoals(controller: NavHostController) {
         controller.navigate(RoutesNavigation.GOALS) {
             popUpTo(RoutesNavigation.INFO_GOAL) {
@@ -54,6 +58,7 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    //изменение состояния цели
     fun changeStatusGoal(goal: Goals){
         viewModelScope.launch {
             supabase.from("Goals").update( {
@@ -68,6 +73,7 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
         _state = _state.copy(goal = goal)
     }
 
+    //изменение статуса задачи
     fun changeStatusTask(id: String, value: Boolean) {
         viewModelScope.launch {
             supabase.from("Tasks").update( {
@@ -86,6 +92,7 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
         _state = state.copy(listTasks = newList)
     }
 
+    //изменение информации о цели
     fun changeGoal(newGoal: Goals) {
         viewModelScope.launch {
             supabase.from("Goals").update(
@@ -104,6 +111,7 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
         _state = _state.copy(goal = newGoal)
     }
 
+    //удаление цели
     fun deleteGoal(controller: NavHostController) {
         viewModelScope.launch {
             supabase.from("Goals").delete {
@@ -119,6 +127,7 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    //изменение задачи
     fun changeTask(newTask: Tasks) {
         viewModelScope.launch {
             supabase.from("Tasks").update(
@@ -140,6 +149,7 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    //удаление задачи
     fun deleteTask(deletedTask: Tasks) {
         viewModelScope.launch {
             _state.loading.value = true
@@ -152,5 +162,4 @@ class InfoGoalViewModel @Inject constructor() : ViewModel() {
             _state.loading.value = false
         }
     }
-
 }

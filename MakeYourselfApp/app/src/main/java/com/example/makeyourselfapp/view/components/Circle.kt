@@ -10,10 +10,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import com.example.makeyourselfapp.view.ui.theme.AccentPY
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
-import com.example.makeyourselfapp.view.ui.theme.PrimaryPY
 
+/* Методы создания круга для экрана статистики*/
 @Composable
 fun CircleGradient() {
     val colors = AppDesign.colors.gradient

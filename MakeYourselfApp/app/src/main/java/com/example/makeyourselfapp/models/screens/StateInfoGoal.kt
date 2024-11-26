@@ -7,7 +7,6 @@ import com.example.makeyourselfapp.models.database.Goals
 import com.example.makeyourselfapp.models.database.Spheres
 import com.example.makeyourselfapp.models.database.Tasks
 
-
 data class StateInfoGoal(
     var goal: Goals = Goals(),
     var listSpheres: List<Spheres> = listOf(),

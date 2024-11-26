@@ -139,8 +139,6 @@ fun StatisticsView(controller: NavHostController, viewModel: StatisticsViewModel
                         textAlign = TextAlign.Center
                     )
                 }
-
-
             }
         }
     }

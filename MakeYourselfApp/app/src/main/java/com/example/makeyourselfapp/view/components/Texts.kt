@@ -1,14 +1,11 @@
 package com.example.makeyourselfapp.view.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
+/* Методы для текста*/
 @Composable
 fun TextTittlePrimary(text: String, modifier: Modifier = Modifier){
     Text(
@@ -71,12 +69,15 @@ fun TextClickable(text: String, modifier: Modifier = Modifier, onClick: () -> Un
 
 @Composable
 fun AnswerClickable(text: String, onClick: () -> Unit){
-    Column (modifier = Modifier.fillMaxWidth().padding(8.dp)){
+    Column (modifier = Modifier
+        .fillMaxWidth()
+        .padding(8.dp)){
         Text(
             text = text,
             style = AppDesign.typography.titleLarge,
             color = AppDesign.colors.accent,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .clickable(onClick = { onClick() })
         )
     }

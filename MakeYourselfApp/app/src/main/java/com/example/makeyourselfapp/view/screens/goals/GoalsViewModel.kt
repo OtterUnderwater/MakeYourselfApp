@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
+//Класс главной страницы приложения, содержащий список целей
 @HiltViewModel
 class GoalsViewModel @Inject constructor() : ViewModel() {
     private val _state by mutableStateOf(StateGoals())
@@ -36,17 +37,18 @@ class GoalsViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-   fun openItem(controller: NavHostController, item: Goals){
-       val json = Json.encodeToString(Goals.serializer(), item)
-       controller.navigate("${RoutesNavigation.INFO_GOAL}/$json")
-   }
+    //просмотр элемента листа целей с параметром item
+    fun openItem(controller: NavHostController, item: Goals){
+        val json = Json.encodeToString(Goals.serializer(), item)
+        controller.navigate("${RoutesNavigation.INFO_GOAL}/$json")
+    }
 
-   fun createItem(controller: NavHostController){
+    //переход на страницу создания цели
+    fun goCreateItem(controller: NavHostController){
         controller.navigate(RoutesNavigation.ITEM_GOAL) {
             popUpTo(RoutesNavigation.GOALS) {
                 inclusive = true
             }
         }
-   }
-
+    }
 }

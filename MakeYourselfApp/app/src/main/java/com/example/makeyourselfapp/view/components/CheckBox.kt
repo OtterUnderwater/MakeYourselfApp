@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
+/* Меню Checkbox*/
 @Composable
 fun CheckBoxMenu(value: Boolean, color: Color, input: (Boolean) -> Unit)
 {

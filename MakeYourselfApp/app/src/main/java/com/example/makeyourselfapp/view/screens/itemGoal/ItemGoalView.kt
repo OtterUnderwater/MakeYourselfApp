@@ -32,7 +32,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
 import com.example.makeyourselfapp.models.database.Goals
-import com.example.makeyourselfapp.models.database.Spheres
 import com.example.makeyourselfapp.models.screens.VMForTask
 import com.example.makeyourselfapp.view.components.ButtonPrimary
 import com.example.makeyourselfapp.view.components.CheckBoxMenu

@@ -44,6 +44,7 @@ import com.example.makeyourselfapp.view.ui.theme.AppDesign
 import java.util.UUID
 
 
+//Диалоговое окно добавления задачи
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun AddTaskView(categories: List<Categories>, vm: VMForTask, switchDialog: () -> Unit) {

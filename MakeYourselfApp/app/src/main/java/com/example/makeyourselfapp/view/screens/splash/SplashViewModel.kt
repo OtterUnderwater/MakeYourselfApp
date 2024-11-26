@@ -12,6 +12,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+//Данный класс загружает страницу авторизации или главную страницу
+//в зависимости от того, был ли пользователь авторизирован
 @HiltViewModel
 class SplashViewModel @Inject constructor() : ViewModel() {
     fun launch(controller: NavHostController, isVisible: MutableState<Boolean>, configuration: Configuration) {

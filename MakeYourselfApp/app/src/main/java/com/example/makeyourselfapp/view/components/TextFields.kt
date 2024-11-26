@@ -3,19 +3,16 @@ package com.example.makeyourselfapp.view.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TextFieldDefaults.outlinedTextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.unit.dp
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
+/* Методы для TextField*/
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldBase(value: String, placeholder: String, input: (String) -> Unit) {

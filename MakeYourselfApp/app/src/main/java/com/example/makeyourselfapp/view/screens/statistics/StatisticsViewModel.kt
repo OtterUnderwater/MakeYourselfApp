@@ -15,6 +15,7 @@ import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+//Класс получает данные из БД для отображения статистики
 @HiltViewModel
 class StatisticsViewModel @Inject constructor() : ViewModel() {
     private var _state by mutableStateOf(StateStatistics())
@@ -22,7 +23,6 @@ class StatisticsViewModel @Inject constructor() : ViewModel() {
 
     fun launch(){
         viewModelScope.launch {
-
             _state.listSpheres = supabase.from("Spheres").select() {
                 filter { eq("id_user", currentUser!!) }
             }.decodeList<Spheres>()
@@ -32,6 +32,4 @@ class StatisticsViewModel @Inject constructor() : ViewModel() {
             _state.loading.value = false
         }
     }
-
-
 }

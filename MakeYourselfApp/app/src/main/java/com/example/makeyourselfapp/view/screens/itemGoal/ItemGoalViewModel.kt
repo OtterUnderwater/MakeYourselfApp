@@ -19,14 +19,11 @@ import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+//Данный класс выполняет различные запросы с БД, редактирование и переход по страницам
 @HiltViewModel
 class ItemGoalViewModel @Inject constructor() : ViewModel() {
     private var _state by mutableStateOf(StateItemGoal())
     val state: StateItemGoal get() = _state
-
-    fun addTasks(newTasks: Tasks) {
-        _state.listTasks.add(newTasks)
-    }
 
     fun launch(){
         viewModelScope.launch {
@@ -37,6 +34,12 @@ class ItemGoalViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    //добавление задачи
+    fun addTasks(newTasks: Tasks) {
+        _state.listTasks.add(newTasks)
+    }
+
+    //изменение статуса задачи
     fun changeStatus(id: String, value: Boolean){
         val newList = state.listTasks.map { task ->
             if (task.id == id) task.copy(status = value)
@@ -45,6 +48,7 @@ class ItemGoalViewModel @Inject constructor() : ViewModel() {
         _state = _state.copy(listTasks = newList)
     }
 
+    //создание цели и сохранение в бд, учитывая связанные с целью задачи
     fun createGoal(controller: NavHostController, newGoal: Goals){
         _state = state.copy(goal = newGoal)
         viewModelScope.launch {
@@ -62,6 +66,7 @@ class ItemGoalViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    //удаление задачи
     fun deleteTask(deletedTask: Tasks) {
         viewModelScope.launch {
             _state.loading.value = true
@@ -75,6 +80,7 @@ class ItemGoalViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    //изменение задачи
     fun changeTask(newTask: Tasks) {
         viewModelScope.launch {
             supabase.from("Tasks").update(
@@ -95,5 +101,4 @@ class ItemGoalViewModel @Inject constructor() : ViewModel() {
             _state = _state.copy(listTasks = newList)
         }
     }
-
 }

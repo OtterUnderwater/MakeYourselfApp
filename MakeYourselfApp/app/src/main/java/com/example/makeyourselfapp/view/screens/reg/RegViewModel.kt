@@ -21,6 +21,7 @@ import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+//Данный класс регистрирует пользователя в бд
 @HiltViewModel
 class RegViewModel @Inject constructor() : ViewModel() {
     @SuppressLint("StaticFieldLeak")
@@ -29,10 +30,12 @@ class RegViewModel @Inject constructor() : ViewModel() {
     private var _user by mutableStateOf(StateUser())
     val user: StateUser get() = _user
 
+    //изменение состояния
     fun setUser(newUser: StateUser) {
         _user = newUser
     }
 
+    //переход на страницу авторизации
     fun goAuth(controller: NavController) {
         controller.navigate(RoutesNavigation.AUTH) {
             popUpTo(RoutesNavigation.REG) {
@@ -41,6 +44,7 @@ class RegViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    //авторизация и сохранение данных
     fun signUp(controller: NavController) {
         if(user.login != "" && user.password != "" && user.name != ""
             && user.twoPassword != "") {

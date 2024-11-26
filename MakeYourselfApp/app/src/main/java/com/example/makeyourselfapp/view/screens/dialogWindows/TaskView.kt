@@ -45,7 +45,7 @@ import com.example.makeyourselfapp.view.components.TextFieldSmall
 import com.example.makeyourselfapp.view.components.TextTittle
 import com.example.makeyourselfapp.view.ui.theme.AppDesign
 
-
+//Диалоговое окно просмотра задачи
 @Composable
 fun TaskView(task: Tasks, categories: List<Categories>, vm: VMForTask, switchDialog: () -> Unit) {
     val listColor = listOf(

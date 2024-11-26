@@ -26,7 +26,7 @@ import com.example.makeyourselfapp.view.ui.theme.AppDesign
 import com.example.makeyourselfapp.view.ui.theme.ListColorTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-// Aннотация точки входа в проект для hilt
+//Aннотация точки входа в проект для hilt
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -14,7 +14,6 @@ import com.example.makeyourselfapp.domain.Constants
 import com.example.makeyourselfapp.domain.Constants.supabase
 import com.example.makeyourselfapp.domain.navigation.RoutesNavigation
 import com.example.makeyourselfapp.domain.repository.PrefManager.currentUser
-import com.example.makeyourselfapp.models.screens.StateMenu
 import com.example.makeyourselfapp.models.screens.StateUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.gotrue.auth
@@ -22,7 +21,7 @@ import io.github.jan.supabase.gotrue.providers.builtin.Email
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+//Класс авторизации пользователя в приложении (с сохранением в PrefManager)
 @HiltViewModel
 class AuthViewModel @Inject constructor() : ViewModel() {
     @SuppressLint("StaticFieldLeak")
@@ -31,14 +30,17 @@ class AuthViewModel @Inject constructor() : ViewModel() {
     private var _user by mutableStateOf(StateUser())
     val user: StateUser get() = _user
 
+    //изменение состояния
     fun setUser(newUser: StateUser) {
         _user = newUser
     }
 
+    //переход на страницу регистрации
     fun goReg(controller: NavController) {
         controller.navigate(RoutesNavigation.REG)
     }
 
+    //вход
     fun signIn(controller: NavController) {
         if(user.login != "" && user.password != "") {
             viewModelScope.launch {
